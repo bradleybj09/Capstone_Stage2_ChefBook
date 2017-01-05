@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.android.chefbook.R;
@@ -38,6 +39,8 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     int servings;
     Ingredient[] ingredients;
     ContentResolver contentResolver;
+    LinearLayout ingredientListLayout;
+    ViewGroup mContainer;
 
     @Override
     public void processRandomFinish(Recipe output) {
@@ -55,6 +58,24 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         rTitleTextView.setText(title);
         rInstructionsTextView.setText(instructions);
         Picasso.with(getActivity()).load(imageURL).into(rImageView);
+
+        Button addRecipeButton = (Button)getView().findViewById(R.id.button_add_recipe);
+        addRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addRecipe(v);
+            }
+        });
+
+        Button addListButton = (Button)getView().findViewById(R.id.button_add_list);
+        addListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToList(v);
+            }
+        });
+
+        populateIngredients();
     }
 
     @Override
@@ -72,6 +93,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         TextView rTitleTextView = (TextView)getView().findViewById(R.id.recipe_detail_title);
         TextView rInstructionsTextView = (TextView)getView().findViewById(R.id.recipe_detail_instructions_body);
         ImageView rImageView = (ImageView)getView().findViewById(R.id.recipe_detail_image);
+
         Button addRecipeButton = (Button)getView().findViewById(R.id.button_add_recipe);
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +113,19 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         rTitleTextView.setText(title);
         rInstructionsTextView.setText(instructions);
         Picasso.with(getActivity()).load(imageURL).into(rImageView);
+
+        populateIngredients();
+    }
+
+    public void populateIngredients(){
+        ingredientListLayout = (LinearLayout)getView().findViewById(R.id.recipe_detail_ingredients_listview);
+        for (int i = 0; i < ingredients.length; i++) {
+            String originalString = ingredients[i].getOriginalString();
+            View item = getActivity().getLayoutInflater().inflate(R.layout.detail_ingredient_view,mContainer,false);
+            TextView textView = (TextView)item.findViewById(R.id.ingredient_item);
+            textView.setText(originalString);
+            ingredientListLayout.addView(item);
+        }
     }
 
     @Override
@@ -106,8 +141,10 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mContainer = container;
         View rootview = inflater.inflate(R.layout.recipe_detail_fragment,container,false);
         Intent intent = getActivity().getIntent();
+
 
         if (intent.getData() == null && getArguments() != null) {
             Bundle b = getArguments();
