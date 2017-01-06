@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.android.chefbook.R;
@@ -39,7 +40,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     int servings;
     Ingredient[] ingredients;
     ContentResolver contentResolver;
-    LinearLayout ingredientListLayout;
+    TextView ingredientListLayout;
     ViewGroup mContainer;
 
     @Override
@@ -118,13 +119,14 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     }
 
     public void populateIngredients(){
-        ingredientListLayout = (LinearLayout)getView().findViewById(R.id.recipe_detail_ingredients_listview);
+        ingredientListLayout = (TextView)getView().findViewById(R.id.recipe_detail_ingredients_textview);
         for (int i = 0; i < ingredients.length; i++) {
             String originalString = ingredients[i].getOriginalString();
-            View item = getActivity().getLayoutInflater().inflate(R.layout.detail_ingredient_view,mContainer,false);
-            TextView textView = (TextView)item.findViewById(R.id.ingredient_item);
-            textView.setText(originalString);
-            ingredientListLayout.addView(item);
+            if(i==0){
+                ingredientListLayout.append(originalString);
+            } else {
+                ingredientListLayout.append("\n" + originalString);
+            }
         }
     }
 
@@ -145,7 +147,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         View rootview = inflater.inflate(R.layout.recipe_detail_fragment,container,false);
         Intent intent = getActivity().getIntent();
 
-
         if (intent.getData() == null && getArguments() != null) {
             Bundle b = getArguments();
             recipeID = b.getInt("recipeID");
@@ -164,6 +165,13 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         }
         FetchRecipeDetail fetchRecipeDetail = new FetchRecipeDetail(this);
         fetchRecipeDetail.execute(String.valueOf(recipeID));
+        RelativeLayout collapseLayout = (RelativeLayout)rootview.findViewById(R.id.collapse_expand_ingredients);
+        collapseLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleIngredients();
+            }
+        });
         return rootview;
     }
 
@@ -227,6 +235,16 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             else {
                 Log.d("add ingredients","null content resolver");
             }
+        }
+    }
+    public void toggleIngredients() {
+        TextView plusMinus = (TextView)getView().findViewById(R.id.textview_plus_minus);
+        if (ingredientListLayout.getVisibility() == View.VISIBLE){
+            plusMinus.setText(getResources().getString(R.string.expand));
+            ingredientListLayout.setVisibility(View.GONE);
+        } else {
+            plusMinus.setText(getResources().getString(R.string.collapse));
+            ingredientListLayout.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -10,7 +10,8 @@
         android:id="@+id/recipe_detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/recipe_title"/>
+        android:text="@string/recipe_title"
+        style="@style/SectionHeader"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -59,29 +60,40 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:text="@string/ingredients_title"/>
+                android:text="@string/ingredients_title"
+                style="@style/SectionHeader"
+                android:layout_margin="8dp"/>
             <TextView
                 android:id="@+id/textview_plus_minus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:text="@string/collapse"/>
+                android:layout_toRightOf="@id/recipe_detail_ingredients_title"
+                android:text="@string/collapse"
+                style="@style/SectionHeader" />
         </RelativeLayout>
-        <LinearLayout
-            android:id="@+id/recipe_detail_ingredients_listview"
+        <TextView
+            android:id="@+id/recipe_detail_ingredients_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
         <TextView
             android:id="@+id/recipe_detail_instructions_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/instructions_title"/>
+            android:text="@string/instructions_title"
+            style="@style/SectionHeader"/>
         <TextView
             android:id="@+id/recipe_detail_instructions_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/instructions_body"/>
+            android:text="@string/instructions_body"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
     </LinearLayout>
 </LinearLayout>

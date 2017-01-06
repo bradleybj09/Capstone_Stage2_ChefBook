@@ -11,7 +11,7 @@
     <string name="recipe_title">Recipe Title</string>
     <string name="instructions_title">Instructions</string>
     <string name="ingredients_title">Ingredients</string>
-    <string name="expand">[+]</string>
-    <string name="collapse">[-]</string>
+    <string name="expand">[ + ]</string>
+    <string name="collapse">[ &#8211; ]</string>
     <string name="instructions_body">Instructions</string>
 </resources>
