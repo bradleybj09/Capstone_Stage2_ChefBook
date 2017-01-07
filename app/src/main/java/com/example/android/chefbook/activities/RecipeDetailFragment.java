@@ -45,6 +45,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
 
     @Override
     public void processRandomFinish(Recipe output) {
+        recipeID = output.getRecipeID();
         title = output.getTitle();
         imageURL = output.getRecipeImageURL();
         instructions = output.getInstructions();
@@ -77,6 +78,42 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         });
 
         populateIngredients();
+    }
+
+    public void populateMyRecipe(Recipe recipe, View view) {
+        recipeID = recipe.getRecipeID();
+        title = recipe.getTitle();
+        imageURL = recipe.getRecipeImageURL();
+        instructions = recipe.getInstructions();
+        readyTime = recipe.getReadyinMinutes();
+        servings = recipe.getServings();
+        ingredients = recipe.getIngredients();
+
+        TextView rTitleTextView = (TextView)view.findViewById(R.id.recipe_detail_title);
+        TextView rInstructionsTextView = (TextView)view.findViewById(R.id.recipe_detail_instructions_body);
+        ImageView rImageView = (ImageView)view.findViewById(R.id.recipe_detail_image);
+
+        Button addRecipeButton = (Button)view.findViewById(R.id.button_add_recipe);
+        addRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addRecipe(v);
+            }
+        });
+
+        Button addListButton = (Button)view.findViewById(R.id.button_add_list);
+        addListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToList(v);
+            }
+        });
+
+        rTitleTextView.setText(title);
+        rInstructionsTextView.setText(instructions);
+        Picasso.with(getActivity()).load(imageURL).into(rImageView);
+
+        populateIngredients(view);
     }
 
     @Override
@@ -129,6 +166,17 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         }
     }
+    public void populateIngredients(View view){
+        ingredientListLayout = (TextView)view.findViewById(R.id.recipe_detail_ingredients_textview);
+        for (int i = 0; i < ingredients.length; i++) {
+            String originalString = ingredients[i].getOriginalString();
+            if(i==0){
+                ingredientListLayout.append(originalString);
+            } else {
+                ingredientListLayout.append("\n" + originalString);
+            }
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -146,10 +194,18 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         mContainer = container;
         View rootview = inflater.inflate(R.layout.recipe_detail_fragment,container,false);
         Intent intent = getActivity().getIntent();
-
-        if (intent.getData() == null && getArguments() != null) {
+        if (intent.hasExtra("full_recipe")){
+            Recipe recipe = intent.getExtras().getParcelable("full_recipe");
+            populateMyRecipe(recipe,rootview);
+            return rootview;
+        } else if (intent.getData() == null && getArguments() != null) {
             Bundle b = getArguments();
             recipeID = b.getInt("recipeID");
+            if (recipeID == 0) {
+                Recipe recipe = b.getParcelable("full_recipe");
+                populateMyRecipe(recipe,rootview);
+                return rootview;
+            }
         }
         else if (intent.hasExtra("recipeID")) {
             recipeID = intent.getExtras().getInt("recipeID");

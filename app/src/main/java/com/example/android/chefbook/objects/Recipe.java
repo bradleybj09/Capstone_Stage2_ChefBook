@@ -40,10 +40,10 @@ public class Recipe implements Parcelable {
         this.recipeID = parcel.readInt();
         this.title = parcel.readString();
         this.imageURL = parcel.readString();
-/*        this.instructions = parcel.readString();
+        this.instructions = parcel.readString();
         this.readyinMinutes = parcel.readInt();
         this.servings = parcel.readInt();
-        this.ingredients = parcel.createTypedArray(Ingredient.CREATOR); */
+        this.ingredients = parcel.createTypedArray(Ingredient.CREATOR);
     }
 
     public int getRecipeID() {
@@ -84,10 +84,10 @@ public class Recipe implements Parcelable {
         parcel.writeInt(recipeID);
         parcel.writeString(title);
         parcel.writeString(imageURL);
-/*        parcel.writeString(instructions);
+        parcel.writeString(instructions);
         parcel.writeInt(readyinMinutes);
         parcel.writeInt(servings);
-        parcel.writeTypedArray(ingredients,0);   */
+        parcel.writeTypedArray(ingredients,0);
     }
     public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
         @Override

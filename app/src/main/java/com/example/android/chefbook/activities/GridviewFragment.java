@@ -2,18 +2,22 @@ package com.example.android.chefbook.activities;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TabHost;
 
 import com.example.android.chefbook.R;
 import com.example.android.chefbook.database.MyRecipesContract;
+import com.example.android.chefbook.objects.Ingredient;
 import com.example.android.chefbook.objects.Recipe;
 import com.example.android.chefbook.utilities.FetchRecipeGrid;
 import com.example.android.chefbook.utilities.FetchedRecipeAdapter;
@@ -70,7 +74,8 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     public void onStart() {
         super.onStart();
         // TODO: 12/17/2016 move the below to method call for searching random recipes, and replace here with MyRecipes call
-        fetchTargetedRecipes("macaroni");
+        //fetchTargetedRecipes("macaroni");
+        fetchMyRecipes();
     }
 
     public void fetchRandomRecipes() {
@@ -79,15 +84,39 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     }
 
     public void fetchMyRecipes() {
-        Cursor cursor = contentResolver.query(MyRecipesContract.TableMyRecipes.RECIPE_CONTENT_URI, null, null, null, null);
+        Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.RECIPE_CONTENT_URI, null, null, null, null);
         GridView gridView = (GridView)getView().findViewById(R.id.gridview);
-        myRecipeAdapter = new MyRecipeAdapter(getActivity(),cursor,0);
+        myRecipeAdapter = new MyRecipeAdapter(getActivity(),rCursor,0);
         gridView.setAdapter(myRecipeAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Recipe recipe = (Recipe)view.getTag();
-                ((MainActivity)getActivity()).launchRecipeDetail(recipe.getRecipeID());
+                Recipe recipe;
+                Cursor cursor = (Cursor)adapterView.getItemAtPosition(i);
+                int recipeID = cursor.getInt(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_ID));
+                String recipeTitle = cursor.getString(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_TITLE));
+                String instructions = cursor.getString(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_INSTRUCTIONS));
+                String imageURL = cursor.getString(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_IMAGE));
+                int readyInMinutes = cursor.getInt(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_READY_TIME));
+                int servings = cursor.getInt(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_SERVINGS));
+                String[] args = {String.valueOf(recipeID)};
+                Cursor iCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.INGREDIENT_CONTENT_URI, null, MyRecipesContract.TableMyRecipes.COLUMN_JOIN_RECIPE_ID+"=?", args, null);
+                iCursor.moveToFirst();
+                Log.e("iCursor", DatabaseUtils.dumpCurrentRowToString(iCursor));
+                Ingredient[] ingredients = new Ingredient[iCursor.getCount()];
+                for (int c = 0; c<ingredients.length; c++){
+                    int ingredientID = iCursor.getInt(iCursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_INGREDIENT_ID));
+                    String name = iCursor.getString(iCursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_INGREDIENT_NAME));
+                    Double amount = iCursor.getDouble(iCursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_AMOUNT));
+                    String unit = iCursor.getString(iCursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_UNIT));
+                    String unitShort = iCursor.getString(iCursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_UNIT_SHORT));
+                    String unitLong = iCursor.getString(iCursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_UNIT_LONG));
+                    String originalString = iCursor.getString(iCursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_ORIGINAL_STRING));
+                    ingredients[c] = new Ingredient(ingredientID,name,amount,unit,unitShort,unitLong,originalString);
+                    iCursor.moveToNext();
+                }
+                recipe = new Recipe(recipeID,recipeTitle,instructions,readyInMinutes,servings,ingredients,imageURL);
+                ((MainActivity)getActivity()).launchRecipeDetail(recipe);
             }
         });
     }

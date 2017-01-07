@@ -53,6 +53,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void launchRecipeDetail(Recipe recipe) {
+        Log.d("MainLaunchDetail","Initiated");
+        if (mTwoPane) {
+            RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
+            Bundle b = new Bundle();
+            b.putParcelable("full_recipe",recipe);
+            recipeDetailFragment.setArguments(b);
+            getSupportFragmentManager().beginTransaction().replace(R.id.recipe_detail_container, recipeDetailFragment,null).commit();
+        } else {
+            Intent intent = new Intent(this, RecipeDetailActivity.class).putExtra("full_recipe", recipe);
+            startActivity(intent);
+        }
+    }
+
     public void getRandomRecipe() {
         Log.d("MainLaunchDetail","Initiated");
         if (mTwoPane) {

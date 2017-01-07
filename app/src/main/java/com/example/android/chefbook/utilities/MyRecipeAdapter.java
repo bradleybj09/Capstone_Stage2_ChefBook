@@ -2,6 +2,7 @@ package com.example.android.chefbook.utilities;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,6 @@ public class MyRecipeAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.gridview_child_container);
         ImageView imageView = (ImageView)view.findViewById(R.id.gridview_recipe_image);
         TextView textView = (TextView)view.findViewById(R.id.gridview_recipe_title);
         String imageURL = cursor.getString(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_IMAGE));
@@ -40,7 +40,5 @@ public class MyRecipeAdapter extends CursorAdapter {
         int recipeID = cursor.getInt(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_ID));
         Picasso.with(context).load(imageURL).into(imageView);
         textView.setText(title);
-        Recipe recipe = new Recipe(recipeID,title,imageURL);
-        linearLayout.setTag(recipe);
     }
 }
