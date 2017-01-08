@@ -3,10 +3,16 @@ package com.example.android.chefbook.activities;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.example.android.chefbook.R;
 import com.example.android.chefbook.database.MyRecipesContract;
@@ -42,6 +49,10 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     ContentResolver contentResolver;
     TextView ingredientListLayout;
     ViewGroup mContainer;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    Button addRecipeButton;
+    Button addListButton;
+    Button removeRecipeButton;
 
     @Override
     public void processRandomFinish(Recipe output) {
@@ -53,15 +64,22 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         servings = output.getServings();
         ingredients = output.getIngredients();
 
-        TextView rTitleTextView = (TextView)getView().findViewById(R.id.recipe_detail_title);
         TextView rInstructionsTextView = (TextView)getView().findViewById(R.id.recipe_detail_instructions_body);
         ImageView rImageView = (ImageView)getView().findViewById(R.id.recipe_detail_image);
 
-        rTitleTextView.setText(title);
+        finalizeUI();
         rInstructionsTextView.setText(instructions);
         Picasso.with(getActivity()).load(imageURL).into(rImageView);
 
-        Button addRecipeButton = (Button)getView().findViewById(R.id.button_add_recipe);
+        removeRecipeButton = (Button)getView().findViewById(R.id.button_remove_recipe);
+        removeRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeRecipe();
+            }
+        });
+
+        addRecipeButton = (Button)getView().findViewById(R.id.button_add_recipe);
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +87,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        Button addListButton = (Button)getView().findViewById(R.id.button_add_list);
+        addListButton = (Button)getView().findViewById(R.id.button_add_list);
         addListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,11 +107,18 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         servings = recipe.getServings();
         ingredients = recipe.getIngredients();
 
-        TextView rTitleTextView = (TextView)view.findViewById(R.id.recipe_detail_title);
         TextView rInstructionsTextView = (TextView)view.findViewById(R.id.recipe_detail_instructions_body);
         ImageView rImageView = (ImageView)view.findViewById(R.id.recipe_detail_image);
 
-        Button addRecipeButton = (Button)view.findViewById(R.id.button_add_recipe);
+        removeRecipeButton = (Button)view.findViewById(R.id.button_remove_recipe);
+        removeRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeRecipe();
+            }
+        });
+
+        addRecipeButton = (Button)view.findViewById(R.id.button_add_recipe);
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +126,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        Button addListButton = (Button)view.findViewById(R.id.button_add_list);
+        addListButton = (Button)view.findViewById(R.id.button_add_list);
         addListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +134,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        rTitleTextView.setText(title);
+        finalizeUI();
         rInstructionsTextView.setText(instructions);
         Picasso.with(getActivity()).load(imageURL).into(rImageView);
 
@@ -128,11 +153,18 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         servings = output.getServings();
         ingredients = output.getIngredients();
 
-        TextView rTitleTextView = (TextView)getView().findViewById(R.id.recipe_detail_title);
         TextView rInstructionsTextView = (TextView)getView().findViewById(R.id.recipe_detail_instructions_body);
         ImageView rImageView = (ImageView)getView().findViewById(R.id.recipe_detail_image);
 
-        Button addRecipeButton = (Button)getView().findViewById(R.id.button_add_recipe);
+        removeRecipeButton = (Button)getView().findViewById(R.id.button_remove_recipe);
+        removeRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeRecipe();
+            }
+        });
+
+        addRecipeButton = (Button)getView().findViewById(R.id.button_add_recipe);
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +172,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        Button addListButton = (Button)getView().findViewById(R.id.button_add_list);
+        addListButton = (Button)getView().findViewById(R.id.button_add_list);
         addListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +180,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        rTitleTextView.setText(title);
+        finalizeUI();
         rInstructionsTextView.setText(instructions);
         Picasso.with(getActivity()).load(imageURL).into(rImageView);
 
@@ -188,23 +220,70 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
 
     }
 
+    public void finalizeUI() {
+        if(title.length() > 25){
+            collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.LongTitle);
+        }
+        if(title.length() > 30){
+            collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.VeryLongTitle);
+            collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.VeryLongTitle);
+        }
+        collapsingToolbarLayout.setTitle(title);
+
+        if (isMyRecipe()) {
+            addRecipeButton.setVisibility(View.GONE);
+            removeRecipeButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            addRecipeButton.setVisibility(View.VISIBLE);
+            removeRecipeButton.setVisibility(View.GONE);
+        }
+    }
+
+    public boolean isMyRecipe(){
+        Cursor c = contentResolver.query(MyRecipesContract.TableMyRecipes.RECIPE_CONTENT_URI, null, MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_ID+ " = " + recipeID, null, null);
+        if (c != null) {
+            if (c.getCount() > 0) {
+                c.close();
+                return true;
+            } else {
+                c.close();
+                return false;
+            }
+        } return false;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContainer = container;
-        View rootview = inflater.inflate(R.layout.recipe_detail_fragment,container,false);
+        View rootView = inflater.inflate(R.layout.recipe_detail_fragment,container,false);
+        Toolbar toolbar = (Toolbar)rootView.findViewById(R.id.detail_toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        AppBarLayout appBarLayout = (AppBarLayout)rootView.findViewById(R.id.detail_appbar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            int scrollRange = -1;
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+            }
+        });
+        collapsingToolbarLayout = (CollapsingToolbarLayout)rootView.findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.colorPrimary));
         Intent intent = getActivity().getIntent();
         if (intent.hasExtra("full_recipe")){
             Recipe recipe = intent.getExtras().getParcelable("full_recipe");
-            populateMyRecipe(recipe,rootview);
-            return rootview;
+            populateMyRecipe(recipe,rootView);
+            return rootView;
         } else if (intent.getData() == null && getArguments() != null) {
             Bundle b = getArguments();
             recipeID = b.getInt("recipeID");
             if (recipeID == 0) {
                 Recipe recipe = b.getParcelable("full_recipe");
-                populateMyRecipe(recipe,rootview);
-                return rootview;
+                populateMyRecipe(recipe,rootView);
+                return rootView;
             }
         }
         else if (intent.hasExtra("recipeID")) {
@@ -213,22 +292,22 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         else if (intent.hasExtra("random") || getArguments().getInt("random") == 1) {
             FetchRandomRecipe fetchRandomRecipe = new FetchRandomRecipe(this);
             fetchRandomRecipe.execute();
-            return rootview;
+            return rootView;
         }
         if (recipeID == 0) {
-            rootview = inflater.inflate(R.layout.start_split_detail,container,false);
-            return rootview;
+            rootView = inflater.inflate(R.layout.start_split_detail,container,false);
+            return rootView;
         }
         FetchRecipeDetail fetchRecipeDetail = new FetchRecipeDetail(this);
         fetchRecipeDetail.execute(String.valueOf(recipeID));
-        RelativeLayout collapseLayout = (RelativeLayout)rootview.findViewById(R.id.collapse_expand_ingredients);
+        RelativeLayout collapseLayout = (RelativeLayout)rootView.findViewById(R.id.collapse_expand_ingredients);
         collapseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleIngredients();
             }
         });
-        return rootview;
+        return rootView;
     }
 
     public void addRecipe(View v) {
@@ -292,6 +371,10 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
                 Log.d("add ingredients","null content resolver");
             }
         }
+    }
+    public void removeRecipe() {
+        contentResolver.delete(MyRecipesContract.TableMyRecipes.RECIPE_CONTENT_URI, MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_ID + " = " + recipeID,null) ;
+        contentResolver.delete(MyRecipesContract.TableMyRecipes.INGREDIENT_CONTENT_URI, MyRecipesContract.TableMyRecipes.COLUMN_JOIN_RECIPE_ID + " = " + recipeID, null);
     }
     public void toggleIngredients() {
         TextView plusMinus = (TextView)getView().findViewById(R.id.textview_plus_minus);
