@@ -2,6 +2,7 @@ package com.example.android.chefbook.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.example.android.chefbook.R;
 
@@ -20,5 +21,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     .add(R.id.recipe_detail_container, recipeDetailFragment)
                     .commit();
         }
+    }
+
+    public void onClick(View view) {
+        recipeDetailFragment.toggleIngredients();
     }
 }

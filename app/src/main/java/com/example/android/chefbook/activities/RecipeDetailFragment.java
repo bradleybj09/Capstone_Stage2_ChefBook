@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
@@ -30,9 +29,8 @@ import com.example.android.chefbook.objects.Ingredient;
 import com.example.android.chefbook.objects.Recipe;
 import com.example.android.chefbook.utilities.FetchRandomRecipe;
 import com.example.android.chefbook.utilities.FetchRecipeDetail;
+import com.github.clans.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Ben on 12/11/2016.
@@ -50,9 +48,10 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     TextView ingredientListLayout;
     ViewGroup mContainer;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    Button addRecipeButton;
-    Button addListButton;
-    Button removeRecipeButton;
+    FloatingActionButton addRecipeButton;
+    FloatingActionButton addListButton;
+    FloatingActionButton removeRecipeButton;
+    View upButton;
 
     @Override
     public void processRandomFinish(Recipe output) {
@@ -64,6 +63,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         servings = output.getServings();
         ingredients = output.getIngredients();
 
+        TextView rPrepServingsTextView = (TextView)getView().findViewById(R.id.textview_minutes_servings);
         TextView rInstructionsTextView = (TextView)getView().findViewById(R.id.recipe_detail_instructions_body);
         ImageView rImageView = (ImageView)getView().findViewById(R.id.recipe_detail_image);
 
@@ -71,7 +71,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         rInstructionsTextView.setText(instructions);
         Picasso.with(getActivity()).load(imageURL).into(rImageView);
 
-        removeRecipeButton = (Button)getView().findViewById(R.id.button_remove_recipe);
+        removeRecipeButton = (FloatingActionButton) getView().findViewById(R.id.fab_remove_recipe);
         removeRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +79,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        addRecipeButton = (Button)getView().findViewById(R.id.button_add_recipe);
+        addRecipeButton = (FloatingActionButton)getView().findViewById(R.id.fab_add_recipe);
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +87,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        addListButton = (Button)getView().findViewById(R.id.button_add_list);
+        addListButton = (FloatingActionButton)getView().findViewById(R.id.fab_add_list);
         addListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +95,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
+        String prepAndServings = getString(R.string.prep_time) + " " + String.valueOf(readyTime) + " " + getString(R.string.minutes)
+                + "\n" + getString(R.string.servings) + " " + String.valueOf(servings);
+        rPrepServingsTextView.setText(prepAndServings);
         populateIngredients();
     }
 
@@ -107,10 +110,11 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         servings = recipe.getServings();
         ingredients = recipe.getIngredients();
 
+        TextView rPrepServingsTextView = (TextView)view.findViewById(R.id.textview_minutes_servings);
         TextView rInstructionsTextView = (TextView)view.findViewById(R.id.recipe_detail_instructions_body);
         ImageView rImageView = (ImageView)view.findViewById(R.id.recipe_detail_image);
 
-        removeRecipeButton = (Button)view.findViewById(R.id.button_remove_recipe);
+        removeRecipeButton = (FloatingActionButton) view.findViewById(R.id.fab_remove_recipe);
         removeRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +122,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        addRecipeButton = (Button)view.findViewById(R.id.button_add_recipe);
+        addRecipeButton = (FloatingActionButton) view.findViewById(R.id.fab_add_recipe);
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +130,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        addListButton = (Button)view.findViewById(R.id.button_add_list);
+        addListButton = (FloatingActionButton) view.findViewById(R.id.fab_add_list);
         addListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +140,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
 
         finalizeUI();
         rInstructionsTextView.setText(instructions);
+        String prepAndServings = getString(R.string.prep_time) + " " + String.valueOf(readyTime) + " " + getString(R.string.minutes)
+                + "\n" + getString(R.string.servings) + " " + String.valueOf(servings);
+        rPrepServingsTextView.setText(prepAndServings);
         Picasso.with(getActivity()).load(imageURL).into(rImageView);
 
         populateIngredients(view);
@@ -153,10 +160,11 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         servings = output.getServings();
         ingredients = output.getIngredients();
 
+        TextView rPrepServingsTextView = (TextView)getView().findViewById(R.id.textview_minutes_servings);
         TextView rInstructionsTextView = (TextView)getView().findViewById(R.id.recipe_detail_instructions_body);
         ImageView rImageView = (ImageView)getView().findViewById(R.id.recipe_detail_image);
 
-        removeRecipeButton = (Button)getView().findViewById(R.id.button_remove_recipe);
+        removeRecipeButton = (FloatingActionButton) getView().findViewById(R.id.fab_remove_recipe);
         removeRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +172,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        addRecipeButton = (Button)getView().findViewById(R.id.button_add_recipe);
+        addRecipeButton = (FloatingActionButton) getView().findViewById(R.id.fab_add_recipe);
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,7 +180,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
-        addListButton = (Button)getView().findViewById(R.id.button_add_list);
+        addListButton = (FloatingActionButton) getView().findViewById(R.id.fab_add_list);
         addListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,6 +189,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         });
 
         finalizeUI();
+        String prepAndServings = getString(R.string.prep_time) + " " + String.valueOf(readyTime) + " " + getString(R.string.minutes)
+                + "\n" + getString(R.string.servings) + " " + String.valueOf(servings);
+        rPrepServingsTextView.setText(prepAndServings);
         rInstructionsTextView.setText(instructions);
         Picasso.with(getActivity()).load(imageURL).into(rImageView);
 
@@ -221,13 +232,18 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     }
 
     public void finalizeUI() {
-        if(title.length() > 25){
+        if(title.length() > 20){
             collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.LongTitle);
-        }
-        if(title.length() > 30){
+            collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.LongTitle);
+        } if(title.length() > 25){
             collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.VeryLongTitle);
             collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.VeryLongTitle);
+        } if (title.length() > 32){
+            collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.VeryVeryLongTitle);
+            collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.VeryVeryLongTitle);
         }
+        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.title_text));
+        collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.title_text));
         collapsingToolbarLayout.setTitle(title);
 
         if (isMyRecipe()) {
@@ -258,8 +274,16 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContainer = container;
         View rootView = inflater.inflate(R.layout.recipe_detail_fragment,container,false);
+        upButton = rootView.findViewById(R.id.action_up);
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AppCompatActivity)getActivity()).onSupportNavigateUp();
+            }
+        });
         Toolbar toolbar = (Toolbar)rootView.findViewById(R.id.detail_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+      //  ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         AppBarLayout appBarLayout = (AppBarLayout)rootView.findViewById(R.id.detail_appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             int scrollRange = -1;
@@ -343,6 +367,8 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
                 Log.d("add ingredients","null content resolver");
             }
         }
+        addRecipeButton.setVisibility(View.GONE);
+        removeRecipeButton.setVisibility(View.VISIBLE);
     }
     public void addToList(View v) {
         ContentValues recipeContentValues = new ContentValues();
@@ -375,6 +401,8 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     public void removeRecipe() {
         contentResolver.delete(MyRecipesContract.TableMyRecipes.RECIPE_CONTENT_URI, MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_ID + " = " + recipeID,null) ;
         contentResolver.delete(MyRecipesContract.TableMyRecipes.INGREDIENT_CONTENT_URI, MyRecipesContract.TableMyRecipes.COLUMN_JOIN_RECIPE_ID + " = " + recipeID, null);
+        addRecipeButton.setVisibility(View.VISIBLE);
+        removeRecipeButton.setVisibility(View.GONE);
     }
     public void toggleIngredients() {
         TextView plusMinus = (TextView)getView().findViewById(R.id.textview_plus_minus);
