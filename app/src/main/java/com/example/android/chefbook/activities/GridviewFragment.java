@@ -5,12 +5,16 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TabHost;
@@ -37,6 +41,8 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     MyRecipeAdapter myRecipeAdapter;
     ArrayList<Recipe> recipes;
     ContentResolver contentResolver;
+    FloatingActionButton fab;
+    GridView gridView;
 
     public GridviewFragment() {
 
@@ -45,7 +51,8 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     @Override
     public void processFinish(ArrayList<Recipe> output) {
         recipes = output;
-        GridView gridView = (GridView)getView().findViewById(gridview);
+        gridView = (GridView)getView().findViewById(gridview);
+        ViewCompat.setNestedScrollingEnabled(gridView,true);
         fetchedRecipeAdapter = new FetchedRecipeAdapter(getActivity(), output);
         gridView.setAdapter(fetchedRecipeAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,6 +74,23 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.gridview_parent, container, false);
+        fab = (FloatingActionButton)rootView.findViewById(R.id.fab_go_list);
+        GridView gridView = (GridView)rootView.findViewById(R.id.gridview);
+        gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem == 0 && fab.getVisibility() == View.GONE) {
+                    fab.show();
+                } else if (firstVisibleItem != 0 && fab.getVisibility() == View.VISIBLE){
+                    fab.hide();
+                }
+            }
+        });
         return rootView;
     }
 
@@ -78,14 +102,15 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
         fetchMyRecipes();
     }
 
-    public void fetchRandomRecipes() {
+    public void fetchRandomRecipe() {
         FetchRecipeGrid fetchRecipeGrid = new FetchRecipeGrid(this);
         fetchRecipeGrid.execute();
     }
 
     public void fetchMyRecipes() {
         Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.RECIPE_CONTENT_URI, null, null, null, null);
-        GridView gridView = (GridView)getView().findViewById(R.id.gridview);
+        gridView = (GridView)getView().findViewById(R.id.gridview);
+        ViewCompat.setNestedScrollingEnabled(gridView,true);
         myRecipeAdapter = new MyRecipeAdapter(getActivity(),rCursor,0);
         gridView.setAdapter(myRecipeAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
