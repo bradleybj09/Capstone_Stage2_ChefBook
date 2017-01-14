@@ -20,4 +20,6 @@
     <string name="servings">Servings:</string>
     <string name="search">Search For Recipes</string>
     <string name="random">Random Recipe</string>
+    <string name="loading">Fetching your recipe&#8230;</string>
+    <string name="up">Up</string>
 </resources>

@@ -30,6 +30,7 @@ import com.example.android.chefbook.objects.Recipe;
 import com.example.android.chefbook.utilities.FetchRandomRecipe;
 import com.example.android.chefbook.utilities.FetchRecipeDetail;
 import com.github.clans.fab.FloatingActionButton;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -55,6 +56,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
 
     @Override
     public void processRandomFinish(Recipe output) {
+
+        final RelativeLayout loadingView = (RelativeLayout)getView().findViewById(R.id.progress_screen);
+
         recipeID = output.getRecipeID();
         title = output.getTitle();
         imageURL = output.getRecipeImageURL();
@@ -68,7 +72,18 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         ImageView rImageView = (ImageView)getView().findViewById(R.id.recipe_detail_image);
 
         rInstructionsTextView.setText(instructions);
-        Picasso.with(getActivity()).load(imageURL).into(rImageView);
+        Picasso.with(getActivity()).load(imageURL).into(rImageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                loadingView.setVisibility(View.GONE);
+                loadingView.animate().translationXBy(-1000).start();
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
 
         removeRecipeButton = (FloatingActionButton) getView().findViewById(R.id.fab_remove_recipe);
         removeRecipeButton.setOnClickListener(new View.OnClickListener() {
@@ -100,8 +115,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
                 + "\n" + getString(R.string.servings) + " " + String.valueOf(servings);
         rPrepServingsTextView.setText(prepAndServings);
         populateIngredients();
-        finalizeUI();
-
     }
 
     public void populateMyRecipe(Recipe recipe, View view) {
@@ -234,6 +247,10 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
 
     }
 
+    public void hideProgress() {
+
+    }
+
     public void finalizeUI() {
         if(title.length() > 20){
             collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.LongTitle);
@@ -317,6 +334,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             recipeID = intent.getExtras().getInt("recipeID");
         }
         else if (intent.hasExtra("random") || getArguments().getInt("random") == 1) {
+            rootView.findViewById(R.id.progress_screen).setVisibility(View.VISIBLE);
             FetchRandomRecipe fetchRandomRecipe = new FetchRandomRecipe(this);
             fetchRandomRecipe.execute();
             return rootView;
