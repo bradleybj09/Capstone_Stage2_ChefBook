@@ -161,6 +161,11 @@ public class FetchRandomRecipe extends AsyncTask<String, Void, Recipe> {
         }
     }
 
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+    }
+
     private int getRandomID(String RecipeJson) throws JSONException {
 
         final String RECIPES = "recipes";

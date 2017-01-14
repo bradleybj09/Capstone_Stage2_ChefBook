@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void getRandomRecipe() {
+    public void getRandomRecipe(View view) {
         Log.d("MainLaunchDetail","Initiated");
         if (mTwoPane) {
             RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();

@@ -1,6 +1,7 @@
 package com.example.android.chefbook.activities;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
@@ -100,11 +101,6 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
         // TODO: 12/17/2016 move the below to method call for searching random recipes, and replace here with MyRecipes call
         //fetchTargetedRecipes("macaroni");
         fetchMyRecipes();
-    }
-
-    public void fetchRandomRecipe() {
-        FetchRecipeGrid fetchRecipeGrid = new FetchRecipeGrid(this);
-        fetchRecipeGrid.execute();
     }
 
     public void fetchMyRecipes() {

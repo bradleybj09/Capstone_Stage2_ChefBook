@@ -67,7 +67,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         TextView rInstructionsTextView = (TextView)getView().findViewById(R.id.recipe_detail_instructions_body);
         ImageView rImageView = (ImageView)getView().findViewById(R.id.recipe_detail_image);
 
-        finalizeUI();
         rInstructionsTextView.setText(instructions);
         Picasso.with(getActivity()).load(imageURL).into(rImageView);
 
@@ -95,10 +94,14 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
 
+        finalizeUI();
+
         String prepAndServings = getString(R.string.prep_time) + " " + String.valueOf(readyTime) + " " + getString(R.string.minutes)
                 + "\n" + getString(R.string.servings) + " " + String.valueOf(servings);
         rPrepServingsTextView.setText(prepAndServings);
         populateIngredients();
+        finalizeUI();
+
     }
 
     public void populateMyRecipe(Recipe recipe, View view) {

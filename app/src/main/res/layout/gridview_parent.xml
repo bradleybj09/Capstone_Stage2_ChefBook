@@ -69,7 +69,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:onClick="">
+                android:onClick="getRandomRecipe">
 
                 <TextView
                     android:paddingTop="8dp"
@@ -112,7 +112,7 @@
                 android:contentDescription="@string/random"
                 android:padding="8dp"
                 android:clickable="true"
-                android:onClick=""/>
+                android:onClick="getRandomRecipe"/>
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
