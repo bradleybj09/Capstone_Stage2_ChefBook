@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -41,12 +42,17 @@ public class FetchRecipeGrid extends AsyncTask<String, Void, ArrayList<Recipe>> 
         BufferedReader bufferedReader = null;
         String recipeJsonStr;
         String currentURL;
-
+        String query = "";
+        try {
+            query = java.net.URLEncoder.encode(strings[0], "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            Log.e("Query Encoding","Failed");
+        }
         if (strings.length == 0) {
             currentURL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/random?limitLicense=false&number=24";
         }
         else {
-            currentURL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?limitLicense=false&number=24&offset=0&query=" + strings[0];
+            currentURL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?limitLicense=false&number=24&offset=0&query=" + query;
         }
 
         try {

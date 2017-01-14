@@ -1,18 +1,22 @@
 package com.example.android.chefbook.activities;
 
+import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import com.example.android.chefbook.R;
 import com.example.android.chefbook.database.MyRecipesContract;
 import com.example.android.chefbook.objects.Recipe;
+import com.example.android.chefbook.utilities.FetchRecipeGrid;
 import com.example.android.chefbook.utilities.MyRecipeAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -93,5 +97,30 @@ public class MainActivity extends AppCompatActivity {
                 launchRecipeDetail(recipe.getRecipeID());
             }
         });
+    }
+
+    public void onSearchClick(View view){
+        onSearchRequested();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            GridviewFragment gridviewFragment = (GridviewFragment)fragmentManager.findFragmentById(R.id.fragment_main);
+            gridviewFragment.fetchTargetedRecipes(query);
+         }
+    }
+
+    public void onHomeClick(View view) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        GridviewFragment gridviewFragment = (GridviewFragment)fragmentManager.findFragmentById(R.id.fragment_main);
+        gridviewFragment.fetchMyRecipes();
     }
 }

@@ -64,15 +64,19 @@
                 android:id="@+id/detail_toolbar"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways" >
-                <ImageView
+                <FrameLayout
                     android:id="@+id/action_up"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="match_parent">
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="?actionBarSize"
                     android:src="@drawable/ic_arrow_back"
                     android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/up"
-                    android:background="?selectableItemBackgroundBorderless"/>
+                    android:contentDescription="@string/up"/>
+                </FrameLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -99,11 +103,12 @@
                 android:layout_marginEnd="8dp"/>
 
             <RelativeLayout
+                android:background="?attr/selectableItemBackground"
                 android:id="@+id/collapse_expand_ingredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:onClick="onClick">
+                android:onClick="onIngredientToggleClick">
 
                 <TextView
                     android:id="@+id/recipe_detail_ingredients_title"

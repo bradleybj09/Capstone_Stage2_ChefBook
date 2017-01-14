@@ -18,8 +18,10 @@
     <string name="prep_time">Total Prep Time:</string>
     <string name="minutes">minutes</string>
     <string name="servings">Servings:</string>
-    <string name="search">Search For Recipes</string>
-    <string name="random">Random Recipe</string>
+    <string name="search">Search</string>
+    <string name="random">Random</string>
     <string name="loading">Fetching your recipe&#8230;</string>
     <string name="up">Up</string>
+    <string name="search_hint">Search recipes</string>
+    <string name="return_to_my">Return to my recipes</string>
 </resources>

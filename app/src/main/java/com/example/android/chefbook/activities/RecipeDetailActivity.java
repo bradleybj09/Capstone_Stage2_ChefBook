@@ -23,7 +23,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void onClick(View view) {
+    public void onIngredientToggleClick(View view) {
         recipeDetailFragment.toggleIngredients();
     }
     public void onRandomClick(View view) {

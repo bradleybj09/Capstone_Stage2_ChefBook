@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 
 import com.example.android.chefbook.R;
@@ -98,7 +99,6 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     @Override
     public void onStart() {
         super.onStart();
-        // TODO: 12/17/2016 move the below to method call for searching random recipes, and replace here with MyRecipes call
         //fetchTargetedRecipes("macaroni");
         fetchMyRecipes();
     }

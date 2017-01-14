@@ -247,10 +247,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
 
     }
 
-    public void hideProgress() {
-
-    }
-
     public void finalizeUI() {
         if(title.length() > 20){
             collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.LongTitle);
