@@ -4,20 +4,17 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -285,6 +282,19 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         } return false;
     }
 
+    public boolean isInList(){
+        Cursor c = contentResolver.query(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, MyRecipesContract.TableMyRecipes.LIST_RECIPE_ID+ " = " + recipeID, null, null);
+        if (c != null) {
+            if (c.getCount() > 0) {
+                c.close();
+                return true;
+            } else {
+                c.close();
+                return false;
+            }
+        } return false;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -388,6 +398,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         removeRecipeButton.setVisibility(View.VISIBLE);
     }
     public void addToList(View v) {
+        if (isInList()) {
+            return;
+        }
         ContentValues recipeContentValues = new ContentValues();
         recipeContentValues.put(MyRecipesContract.TableMyRecipes.LIST_RECIPE_ID, recipeID);
         recipeContentValues.put(MyRecipesContract.TableMyRecipes.LIST_RECIPE_NAME, title);
@@ -401,6 +414,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         for (int x = 0; x < ingredients.length; x++) {
             ContentValues ingredientContentValues = new ContentValues();
             ingredientContentValues.put(MyRecipesContract.TableMyRecipes.LIST_INGREDIENT_ID, ingredients[x].getIngredientID());
+            ingredientContentValues.put(MyRecipesContract.TableMyRecipes.LIST_INGREDIENT_JOIN_ID,recipeID);
             ingredientContentValues.put(MyRecipesContract.TableMyRecipes.LIST_INGREDIENT_NAME, ingredients[x].getName());
             ingredientContentValues.put(MyRecipesContract.TableMyRecipes.LIST_INGREDIENT_AMOUNT, ingredients[x].getAmount());
             ingredientContentValues.put(MyRecipesContract.TableMyRecipes.LIST_INGREDIENT_UNIT, ingredients[x].getUnit());
@@ -420,6 +434,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         contentResolver.delete(MyRecipesContract.TableMyRecipes.INGREDIENT_CONTENT_URI, MyRecipesContract.TableMyRecipes.COLUMN_JOIN_RECIPE_ID + " = " + recipeID, null);
         addRecipeButton.setVisibility(View.VISIBLE);
         removeRecipeButton.setVisibility(View.GONE);
+
     }
     public void toggleIngredients() {
         TextView plusMinus = (TextView)getView().findViewById(R.id.textview_plus_minus);

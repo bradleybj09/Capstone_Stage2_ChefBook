@@ -74,6 +74,7 @@ public class MyRecipesContract {
         public static final String LIST_RECIPE_ID = "list_recipe_id";
         public static final String LIST_RECIPE_NAME = "list_recipe_name";
         public static final String LIST_INGREDIENT_ID = "list_ingredient_id";
+        public static final String LIST_INGREDIENT_JOIN_ID = "list_ingredient_join_id";
         public static final String LIST_INGREDIENT_NAME = "list_ingredient_name";
         public static final String LIST_INGREDIENT_AMOUNT = "list_ingredient_amount";
         public static final String LIST_INGREDIENT_UNIT = "list_ingredient_unit";
@@ -89,6 +90,7 @@ public class MyRecipesContract {
         public static final String CREATE_TABLE_LIST_INGREDIENTS = "CREATE TABLE " + LIST_INGREDIENTS_TABLE_NAME + "("
                 + _ID + " INTEGER PRIMARY KEY, "
                 + LIST_INGREDIENT_ID + " INTEGER NOT NULL, "
+                + LIST_INGREDIENT_JOIN_ID + " INTEGER NOT NULL, "
                 + LIST_INGREDIENT_NAME + " TEXT NOT NULL, "
                 + LIST_INGREDIENT_AMOUNT + " REAL NOT NULL, "
                 + LIST_INGREDIENT_UNIT + " TEXT NOT NULL, "

@@ -11,12 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 
 import com.example.android.chefbook.R;
 import com.example.android.chefbook.database.MyRecipesContract;
 import com.example.android.chefbook.objects.Recipe;
-import com.example.android.chefbook.utilities.FetchRecipeGrid;
 import com.example.android.chefbook.utilities.MyRecipeAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -122,5 +120,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         GridviewFragment gridviewFragment = (GridviewFragment)fragmentManager.findFragmentById(R.id.fragment_main);
         gridviewFragment.fetchMyRecipes();
+    }
+
+    public void onListClick(View view) {
+        Intent listIntent = new Intent(this, ShoppingListActivity.class);
+        startActivity(listIntent);
     }
 }

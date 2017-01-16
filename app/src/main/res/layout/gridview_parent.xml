@@ -182,5 +182,6 @@
         android:src="@drawable/ic_filter_none_black_24dp"
         android:id="@+id/fab_go_list"
         android:layout_gravity="bottom|end"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:onClick="onListClick"/>
 </android.support.design.widget.CoordinatorLayout>

@@ -4,7 +4,6 @@
     <string name="shopping_list">Shopping List</string>
     <string name="my_recipes">My Recipes</string>
     <string name="search_results">Search Results</string>
-    <string name="finished_shopping">Finished Shopping</string>
     <string name="add_recipe">Add to My Recipes</string>
     <string name="remove_recipe">Remove from My Recipes</string>
     <string name="add_to_list">Add to Shopping List</string>
@@ -24,4 +23,8 @@
     <string name="up">Up</string>
     <string name="search_hint">Search recipes</string>
     <string name="return_to_my">Return to my recipes</string>
+    <string name="recipes_title">Recipes</string>
+    <string name="clear_shopping">Empty List</string>
+    <string name="clear_message">Are you sure you want to empty your shopping list?</string>
+    <string name="find_store">Find a grocery store</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.android.chefbook.R;
@@ -28,9 +29,11 @@ public class ListRecipeAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView textView = (TextView)view.findViewById(R.id.shopping_list_recipe);
+        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.shopping_list_recipe);
+        TextView textView = (TextView)view.findViewById(R.id.shopping_list_recipe_title);
         int recipeID = cursor.getInt(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.LIST_RECIPE_ID));
         String recipeName = cursor.getString(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.LIST_RECIPE_NAME));
         textView.setText(recipeName);
+        relativeLayout.setTag(recipeID);
     }
 }

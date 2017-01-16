@@ -64,19 +64,16 @@
                 android:id="@+id/detail_toolbar"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways" >
-                <FrameLayout
-                    android:id="@+id/action_up"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:layout_width="?attr/actionBarSize"
-                    android:layout_height="match_parent">
+
                 <ImageView
+                    android:id="@+id/action_up"
                     android:layout_width="wrap_content"
                     android:layout_height="?actionBarSize"
                     android:src="@drawable/ic_arrow_back"
                     android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/up"/>
-                </FrameLayout>
+                    android:contentDescription="@string/up"
+                    android:background="?selectableItemBackgroundBorderless"/>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

@@ -57,15 +57,6 @@ public class Ingredient implements Parcelable {
         return unitShort;
     }
 
-    public void toggleIngredient(){
-        if (!isPurchased) {
-            isPurchased = true;
-        }
-        else {
-            isPurchased = false;
-        }
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -79,6 +70,12 @@ public class Ingredient implements Parcelable {
         this.unitShort = parcel.readString();
         this.unitLong = parcel.readString();
         this.originalString = parcel.readString();
+    }
+
+    public Ingredient(int ingredientID, String name, String unit) {
+        this.ingredientID = ingredientID;
+        this.name = name;
+        this.unit = unit;
     }
 
     @Override

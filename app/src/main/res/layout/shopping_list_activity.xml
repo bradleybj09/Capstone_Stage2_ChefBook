@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/list_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:contentInsetStartWithNavigation="0dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/shopping_list"/>
+        android:text="@string/recipes_title"
+        style="@style/SectionHeader"/>
+
     <ListView
+        android:layout_margin="8dp"
+        android:id="@+id/list_recipe_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:listSelector="@android:color/transparent"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ingredients_title"
+        style="@style/SectionHeader"/>
+
     <ListView
+        android:layout_margin="8dp"
+        android:id="@+id/list_ingredient_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/finished_shopping"/>
-
+        android:text="@string/clear_shopping"
+        android:onClick="finishShopping"/>
 </LinearLayout>
