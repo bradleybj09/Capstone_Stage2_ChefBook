@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -36,6 +37,7 @@ public class ShoppingListActivity extends AppCompatActivity{
     ListRecipeAdapter listRecipeAdapter;
     ListIngredientAdapter listIngredientAdapter;
     View upButton;
+    FrameLayout emptyLayout;
 
     public ShoppingListActivity() {
 
@@ -45,11 +47,17 @@ public class ShoppingListActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         contentResolver = getContentResolver();
         setContentView(R.layout.shopping_list_activity);
+        emptyLayout = (FrameLayout)findViewById(R.id.empty_list_layout);
         ListView recipeListView = (ListView)findViewById(R.id.list_recipe_listview);
         Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, null, null, null);
-        populateIngredientList();
-        listRecipeAdapter = new ListRecipeAdapter(this, rCursor, 0);
-        recipeListView.setAdapter(listRecipeAdapter);
+        if (rCursor.getCount() > 0) {
+            populateIngredientList();
+            listRecipeAdapter = new ListRecipeAdapter(this, rCursor, 0);
+            recipeListView.setAdapter(listRecipeAdapter);
+        }
+        else {
+             emptyLayout.setVisibility(View.VISIBLE);
+        }
         setSupportActionBar((Toolbar)findViewById(R.id.list_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
@@ -102,10 +110,16 @@ public class ShoppingListActivity extends AppCompatActivity{
         contentResolver.delete(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, MyRecipesContract.TableMyRecipes.LIST_RECIPE_ID + " = " + String.valueOf(recipeID),null);
         contentResolver.delete(MyRecipesContract.TableMyRecipes.LIST_INGREDIENT_CONTENT_URI, MyRecipesContract.TableMyRecipes.LIST_INGREDIENT_JOIN_ID + " = " + String.valueOf(recipeID),null);
         Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, null, null, null);
-        ListView recipeListView = (ListView)findViewById(R.id.list_recipe_listview);
-        listRecipeAdapter = new ListRecipeAdapter(this, rCursor, 0);
-        recipeListView.setAdapter(listRecipeAdapter);
-        populateIngredientList();
+        if (rCursor.getCount() > 0) {
+            ListView recipeListView = (ListView) findViewById(R.id.list_recipe_listview);
+            listRecipeAdapter = new ListRecipeAdapter(this, rCursor, 0);
+            recipeListView.setAdapter(listRecipeAdapter);
+            populateIngredientList();
+        }
+        else {
+            emptyLayout.setVisibility(View.VISIBLE);
+            populateIngredientList();
+        }
     }
 
     public void removeListIngredient(View view) {

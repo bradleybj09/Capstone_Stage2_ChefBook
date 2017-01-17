@@ -34,4 +34,5 @@
     <string name="launch_my">Revisit your favorites</string>
     <string name="launch_list">All in one place - clear it as you shop</string>
     <string name="launch_random">Feeling bold? Go for the unknown!</string>
+    <string name="empty_list">Your shopping list is empty! \n\nAdd some recipes before you go to the store.</string>
 </resources>
