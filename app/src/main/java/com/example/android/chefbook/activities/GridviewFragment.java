@@ -43,7 +43,6 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     MyRecipeAdapter myRecipeAdapter;
     ArrayList<Recipe> recipes;
     ContentResolver contentResolver;
-    FloatingActionButton fab;
     GridView gridView;
 
     public GridviewFragment() {
@@ -76,23 +75,6 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.gridview_parent, container, false);
-        fab = (FloatingActionButton)rootView.findViewById(R.id.fab_go_list);
-        GridView gridView = (GridView)rootView.findViewById(R.id.gridview);
-        gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0 && fab.getVisibility() == View.GONE) {
-                    fab.show();
-                } else if (firstVisibleItem != 0 && fab.getVisibility() == View.VISIBLE){
-                    fab.hide();
-                }
-            }
-        });
         return rootView;
     }
 

@@ -38,6 +38,19 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mTwoPane = false;
         }
+        Intent intent = getIntent();
+        if (intent.hasExtra("launch")){
+            if (intent.getStringExtra("launch").equals("MyRecipes")) {
+
+            } else if (intent.getStringExtra("launch").equals("Search")) {
+                onSearchRequested();
+            } else if (intent.getStringExtra("launch").equals("Random")) {
+                getRandomRecipe(null);
+            } else if (intent.getStringExtra("launch").equals("List")) {
+                Intent listIntent = new Intent(this, ShoppingListActivity.class);
+                startActivity(listIntent);
+            }
+        }
         Log.d("MainActivity/onCreate","Finished");
     }
 

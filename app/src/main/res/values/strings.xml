@@ -27,4 +27,11 @@
     <string name="clear_shopping">Empty List</string>
     <string name="clear_message">Are you sure you want to empty your shopping list?</string>
     <string name="find_store">Find a grocery store</string>
+    <string name="title_activity_launch">LaunchActivity</string>
+    <string name="get_started">Get Started</string>
+    <string name="launch_search">Craving something specific?</string>
+    <string name="list">List</string>
+    <string name="launch_my">Revisit your favorites</string>
+    <string name="launch_list">All in one place - clear it as you shop</string>
+    <string name="launch_random">Feeling bold? Go for the unknown!</string>
 </resources>
