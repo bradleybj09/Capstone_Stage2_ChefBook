@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -74,7 +76,21 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.gridview_parent, container, false);
+        final View rootView = inflater.inflate(R.layout.gridview_parent, container, false);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            rootView.findViewById(R.id.gridview).setVisibility(View.GONE);
+            rootView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    rootView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                        getActivity().startPostponedEnterTransition();
+                    }
+                    rootView.findViewById(R.id.gridview).setVisibility(View.VISIBLE);
+                    return true;
+                }
+            });
+        }
         return rootView;
     }
 

@@ -309,7 +309,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         });
         Toolbar toolbar = (Toolbar)rootView.findViewById(R.id.detail_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-      //  ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         AppBarLayout appBarLayout = (AppBarLayout)rootView.findViewById(R.id.detail_appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             int scrollRange = -1;

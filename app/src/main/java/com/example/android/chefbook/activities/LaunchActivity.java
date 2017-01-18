@@ -1,11 +1,16 @@
 package com.example.android.chefbook.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.Pair;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -166,19 +171,48 @@ public class LaunchActivity extends AppCompatActivity {
     public void onLaunchClickMyRecipes(View view) {
         Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("launch","MyRecipes");
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+
+            Pair[] pairs = new Pair[]{
+                    new Pair<View, String>(findViewById(R.id.star_image), "star_image"),
+                    new Pair<View, String>(findViewById(R.id.star_text), "star_text"),
+                    new Pair<View, String>(findViewById(R.id.search_image), "search_image"),
+                    new Pair<View, String>(findViewById(R.id.search_text), "search_text"),
+                    new Pair<View, String>(findViewById(R.id.random_image), "random_image"),
+                    new Pair<View, String>(findViewById(R.id.random_text), "random_text"),
+                    new Pair<View, String>(findViewById(R.id.list_image), "list_image"),
+                    new Pair<View, String>(findViewById(R.id.list_text), "list_text")};
+            Bundle b = ActivityOptions.makeSceneTransitionAnimation(this, pairs).toBundle();
+            startActivity(intent, b);
+        } else {
+            startActivity(intent);
+        }
     }
 
     public void onLaunchClickSearch(View view) {
         Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("launch","Search");
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+
+            Pair[] pairs = new Pair[]{
+                    new Pair<View, String>(findViewById(R.id.star_image), "star_image"),
+                    new Pair<View, String>(findViewById(R.id.star_text), "star_text"),
+                    new Pair<View, String>(findViewById(R.id.search_image), "search_image"),
+                    new Pair<View, String>(findViewById(R.id.search_text), "search_text"),
+                    new Pair<View, String>(findViewById(R.id.random_image), "random_image"),
+                    new Pair<View, String>(findViewById(R.id.random_text), "random_text"),
+                    new Pair<View, String>(findViewById(R.id.list_image), "list_image"),
+                    new Pair<View, String>(findViewById(R.id.list_text), "list_text")};
+            Bundle b = ActivityOptions.makeSceneTransitionAnimation(this, pairs).toBundle();
+            startActivity(intent, b);
+        } else {
+            startActivity(intent);
+        }
     }
 
     public void onLaunchClickRandom(View view) {
-        Intent intent = new Intent(this,MainActivity.class);
-        intent.putExtra("launch","Random");
-        startActivity(intent);
+            Intent intent = new Intent(this,RecipeDetailActivity.class).putExtra("random",1);
+            startActivity(intent);
     }
 
     public void onLaunchClickList(View view) {

@@ -50,13 +50,15 @@
                 android:layout_marginBottom="8dp"
                 android:elevation="4dp">
                 <ImageView
+                    android:id="@+id/star_image"
+                    android:transitionName="star_image"
                     android:src="@drawable/ic_star_black_24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
                     android:layout_gravity="center"
-                    android:padding="36dp"/>
+                    android:padding="24dp"/>
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
@@ -65,11 +67,14 @@
                     android:background="@color/colorAccent"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="8dp"
-                    android:paddingRight="8dp">
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp">
                     <TextView
+                        android:id="@+id/star_text"
+                        android:transitionName="star_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/my_recipes"
@@ -97,13 +102,15 @@
                 android:layout_marginBottom="8dp"
                 android:elevation="4dp">
                 <ImageView
+                    android:id="@+id/search_image"
+                    android:transitionName="search_image"
                     android:src="@drawable/ic_search_black_24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
                     android:layout_gravity="center"
-                    android:padding="36dp"/>
+                    android:padding="24dp"/>
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
@@ -112,11 +119,14 @@
                     android:background="@color/colorAccent"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="8dp"
-                    android:paddingRight="8dp">
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp">
                     <TextView
+                        android:id="@+id/search_text"
+                        android:transitionName="search_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/search"
@@ -144,13 +154,15 @@
                 android:layout_marginBottom="8dp"
                 android:elevation="4dp">
                 <ImageView
+                    android:id="@+id/random_image"
+                    android:transitionName="random_image"
                     android:src="@drawable/ic_shuffle_black_24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
                     android:layout_gravity="center"
-                    android:padding="36dp"/>
+                    android:padding="24dp"/>
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
@@ -159,11 +171,14 @@
                     android:background="@color/colorAccent"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="8dp"
-                    android:paddingRight="8dp">
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp">
                     <TextView
+                        android:id="@+id/random_text"
+                        android:transitionName="random_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/random"
@@ -191,13 +206,15 @@
                 android:layout_marginBottom="8dp"
                 android:elevation="4dp">
                 <ImageView
+                    android:id="@+id/list_image"
+                    android:transitionName="list_image"
                     android:src="@drawable/ic_filter_none_black_24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
                     android:layout_gravity="center"
-                    android:padding="36dp"/>
+                    android:padding="24dp"/>
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
@@ -206,11 +223,14 @@
                     android:background="@color/colorAccent"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingRight="8dp"
-                    android:paddingLeft="8dp">
+                    android:paddingLeft="8dp"
+                    android:paddingBottom="8dp">
                     <TextView
+                        android:id="@+id/list_text"
+                        android:transitionName="list_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/list"
