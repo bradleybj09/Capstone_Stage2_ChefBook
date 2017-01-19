@@ -1,7 +1,11 @@
 package com.example.android.chefbook.activities;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.view.Gravity;
 import android.view.View;
 
 import com.example.android.chefbook.R;
@@ -25,8 +29,5 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     public void onIngredientToggleClick(View view) {
         recipeDetailFragment.toggleIngredients();
-    }
-    public void onRandomClick(View view) {
-
     }
 }

@@ -35,4 +35,6 @@
     <string name="launch_list">All in one place - clear it as you shop</string>
     <string name="launch_random">Feeling bold? Go for the unknown!</string>
     <string name="empty_list">Your shopping list is empty! \n\nAdd some recipes before you go to the store.</string>
+    <string name="ad_unit_id">ca-app-pub-5551247818101576/7259317249</string>
+    <string name="ad_app_id">222D53C89DF31924ACA6B2C02D748779</string>
 </resources>

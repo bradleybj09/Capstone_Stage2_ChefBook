@@ -61,7 +61,7 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ((MainActivity)getActivity()).launchRecipeDetail(recipes.get(i).getRecipeID());
+                ((MainActivity)getActivity()).launchRecipeDetail(recipes.get(i));
             }
         });
     }

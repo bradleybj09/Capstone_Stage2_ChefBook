@@ -1,14 +1,19 @@
 package com.example.android.chefbook.activities;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.android.chefbook.R;
 import com.example.android.chefbook.database.MyRecipesContract;
@@ -27,6 +33,11 @@ import com.example.android.chefbook.database.MyRecipesDatabaseHelper;
 import com.example.android.chefbook.objects.Ingredient;
 import com.example.android.chefbook.utilities.ListIngredientAdapter;
 import com.example.android.chefbook.utilities.ListRecipeAdapter;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 /**
  * Created by Ben on 1/2/2017.
@@ -38,10 +49,9 @@ public class ShoppingListActivity extends AppCompatActivity{
     ListIngredientAdapter listIngredientAdapter;
     View upButton;
     FrameLayout emptyLayout;
-
-    public ShoppingListActivity() {
-
-    }
+    GoogleApiClient mGoogleApiClient;
+    final int MY_PERMISSION_REQUEST_LOCATION = 1;
+    InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,11 +66,48 @@ public class ShoppingListActivity extends AppCompatActivity{
             recipeListView.setAdapter(listRecipeAdapter);
         }
         else {
-             emptyLayout.setVisibility(View.VISIBLE);
+            emptyLayout.setVisibility(View.VISIBLE);
         }
         setSupportActionBar((Toolbar)findViewById(R.id.list_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .build();
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.ad_unit_id));
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+
+        requestNewInterstitial();
         super.onCreate(savedInstanceState);
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(getString(R.string.ad_app_id))
+                .build();
+        mInterstitialAd.loadAd(adRequest);
+    }
+
+    public ShoppingListActivity() {
+
+    }
+
+    @Override
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
     @Override
@@ -73,11 +120,60 @@ public class ShoppingListActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_map:
-                String lat = "";
-                String lon = "";
-                Uri gmmIntentUri= Uri.parse("geo:" + lat + "," + lon + "?q=grocery stores");
-                return true;
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                        Toast toast = Toast.makeText(this,"ChefBook needs to access your location to find the nearest grocery stores",Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},MY_PERMISSION_REQUEST_LOCATION);
+                    }
+                } else {
+                    Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                    double lat = lastLocation.getLatitude();
+                    double lon = lastLocation.getLongitude();
+                    Uri gmmIntentUri= Uri.parse("geo:" + String.valueOf(lat) + "," + String.valueOf(lon) + "?q=grocery stores");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(mapIntent);
+                    }
+                    else {
+                        Toast noMapToast = Toast.makeText(this,"You have no map app available",Toast.LENGTH_SHORT);
+                        noMapToast.show();
+                    }
+                    return true;
+                }
             default: return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                    double lat = lastLocation.getLatitude();
+                    double lon = lastLocation.getLongitude();
+                    Uri gmmIntentUri = Uri.parse("geo:" + String.valueOf(lat) + "," + String.valueOf(lon) + "?q=grocery stores");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(mapIntent);
+                    } else {
+                        Toast noMapToast = Toast.makeText(this, "You have no map app available", Toast.LENGTH_SHORT);
+                        noMapToast.show();
+                    }
+                }
+
+                } else {
+
+                }
+                return;
+            }
         }
     }
 
@@ -117,6 +213,7 @@ public class ShoppingListActivity extends AppCompatActivity{
             populateIngredientList();
         }
         else {
+            onListEmptied();
             emptyLayout.setVisibility(View.VISIBLE);
             populateIngredientList();
         }
@@ -139,6 +236,7 @@ public class ShoppingListActivity extends AppCompatActivity{
                 .setPositiveButton("I'm sure", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        onListEmptied();
                         contentResolver.delete(MyRecipesContract.TableMyRecipes.LIST_INGREDIENT_CONTENT_URI, null, null);
                         contentResolver.delete(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, null);
                         recreate();
@@ -146,5 +244,11 @@ public class ShoppingListActivity extends AppCompatActivity{
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    public void onListEmptied() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
     }
 }
