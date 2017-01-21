@@ -61,7 +61,7 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ((MainActivity)getActivity()).launchRecipeDetail(recipes.get(i));
+                ((MainActivity)getActivity()).launchRecipeDetail(recipes.get(i).getRecipeID(), recipes);
             }
         });
     }
@@ -70,6 +70,10 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentResolver = getContext().getContentResolver();
+        Intent activityIntent = getActivity().getIntent();
+        if ("rebuild_search".equals(activityIntent.getAction())) {
+            recipes = activityIntent.getExtras().getParcelableArrayList("recipes");
+        }
         Log.d("GridviewFrag onCreate","Finished");
     }
 
@@ -97,8 +101,11 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     @Override
     public void onStart() {
         super.onStart();
-        //fetchTargetedRecipes("macaroni");
-        fetchMyRecipes();
+        if (recipes == null) {
+            fetchMyRecipes();
+        } else {
+            processFinish(recipes);
+        }
     }
 
     public void fetchMyRecipes() {

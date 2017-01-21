@@ -1,5 +1,6 @@
 package com.example.android.chefbook.activities;
 
+import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -30,6 +31,8 @@ import com.github.clans.fab.FloatingActionButton;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ben on 12/11/2016.
  */
@@ -50,6 +53,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     FloatingActionButton addListButton;
     FloatingActionButton removeRecipeButton;
     View upButton;
+    ArrayList<Recipe> searchedRecipes;
 
     @Override
     public void processRandomFinish(Recipe output) {
@@ -304,7 +308,15 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((AppCompatActivity)getActivity()).onSupportNavigateUp();
+                if (searchedRecipes != null) {
+                    Intent intent = new Intent(getActivity(),MainActivity.class);
+                    intent.setAction("rebuild_search");
+                    intent.putExtra("recipes", searchedRecipes);
+                    startActivity(intent);
+
+                } else {
+                    ((AppCompatActivity) getActivity()).onSupportNavigateUp();
+                }
             }
         });
         Toolbar toolbar = (Toolbar)rootView.findViewById(R.id.detail_toolbar);
@@ -337,6 +349,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         }
         else if (intent.hasExtra("recipeID")) {
             recipeID = intent.getExtras().getInt("recipeID");
+            searchedRecipes = intent.getExtras().getParcelableArrayList("recipes");
         }
         else if (intent.hasExtra("random") || getArguments().getInt("random") == 1) {
             rootView.findViewById(R.id.progress_screen).setVisibility(View.VISIBLE);

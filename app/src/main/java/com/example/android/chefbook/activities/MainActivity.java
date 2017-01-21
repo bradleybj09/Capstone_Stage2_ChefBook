@@ -18,10 +18,11 @@ import com.example.android.chefbook.database.MyRecipesContract;
 import com.example.android.chefbook.objects.Recipe;
 import com.example.android.chefbook.utilities.MyRecipeAdapter;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private boolean mTwoPane;
     ContentResolver contentResolver;
-    MyRecipeAdapter myRecipeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +55,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent listIntent = new Intent(this, ShoppingListActivity.class);
                 startActivity(listIntent);
             }
+        } else if (intent.hasExtra("full_recipe")) {
+            launchRecipeDetail((Recipe)intent.getExtras().getParcelable("full_recipe"));
+        } else if (intent.getAction().equals("search")) {
+
         }
         Log.d("MainActivity/onCreate","Finished");
     }
 
-    public void launchRecipeDetail(int recipeID) {
+    public void launchRecipeDetail(int recipeID, ArrayList<Recipe> recipes) {
         Log.d("MainLaunchDetail","Initiated");
         if (mTwoPane) {
             RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.recipe_detail_container, recipeDetailFragment,null).commit();
         } else {
             Intent intent = new Intent(this, RecipeDetailActivity.class).putExtra("recipeID", recipeID);
+            intent.putExtra("recipes", recipes);
             startActivity(intent);
         }
     }
@@ -98,20 +104,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, RecipeDetailActivity.class).putExtra("random", 1);
             startActivity(intent);
         }
-    }
-
-    public void mainFetchMyRecipes() {
-        Cursor cursor = contentResolver.query(MyRecipesContract.TableMyRecipes.RECIPE_CONTENT_URI, null, null, null, null);
-        GridView gridView = (GridView)findViewById(R.id.gridview);
-        myRecipeAdapter = new MyRecipeAdapter(this,cursor,0);
-        gridView.setAdapter(myRecipeAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Recipe recipe = (Recipe)view.getTag();
-                launchRecipeDetail(recipe.getRecipeID());
-            }
-        });
     }
 
     public void onSearchClick(View view){
