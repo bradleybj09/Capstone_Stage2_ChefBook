@@ -50,14 +50,14 @@
                 android:id="@+id/scrim_top"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="48dp"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/medium_grey"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:id="@+id/scrim_bottom"
                 android:layout_gravity="bottom"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/medium_grey"/>
 
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                     android:id="@+id/action_up"
                     android:layout_width="wrap_content"
                     android:layout_height="?actionBarSize"
-                    android:src="@drawable/ic_arrow_back"
+                    android:src="@drawable/ic_arrow_back_black_24dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
                     android:contentDescription="@string/up"
@@ -170,7 +170,9 @@
         fab:menu_fab_label="@string/close_menu"
         fab:menu_icon="@drawable/ic_add_black_24dp"
         android:layout_gravity="bottom|end"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        fab:menu_colorNormal="@color/main_yellow"
+        fab:menu_colorPressed="@color/darker_yellow">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_remove_recipe"
@@ -179,7 +181,9 @@
             fab:fab_label="@string/remove_recipe"
             android:visibility="gone"
             fab:fab_size="mini"
-            android:src="@drawable/ic_remove_black_24dp"/>
+            android:src="@drawable/ic_remove_black_24dp"
+            fab:fab_colorNormal="@color/main_yellow"
+            fab:fab_colorPressed="@color/darker_yellow"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_add_recipe"
@@ -187,7 +191,9 @@
             android:layout_height="wrap_content"
             fab:fab_label="@string/add_recipe"
             fab:fab_size="mini"
-            android:src="@drawable/ic_add_black_24dp"/>
+            android:src="@drawable/ic_add_black_24dp"
+            fab:fab_colorNormal="@color/main_yellow"
+            fab:fab_colorPressed="@color/darker_yellow"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_add_list"
@@ -195,7 +201,9 @@
             android:layout_height="wrap_content"
             fab:fab_label="@string/add_to_list"
             fab:fab_size="mini"
-            android:src="@drawable/ic_add_to_photos_black_24dp"/>
+            android:src="@drawable/ic_add_to_photos_black_24dp"
+            fab:fab_colorNormal="@color/main_yellow"
+            fab:fab_colorPressed="@color/darker_yellow"/>
     </com.github.clans.fab.FloatingActionMenu>
 
     <RelativeLayout

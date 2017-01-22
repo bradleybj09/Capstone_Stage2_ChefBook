@@ -174,6 +174,7 @@ public class LaunchActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
 
             Pair[] pairs = new Pair[]{
+                    new Pair<View, String>(findViewById(R.id.app_logo), "logo"),
                     new Pair<View, String>(findViewById(R.id.star_image), "star_image"),
                     new Pair<View, String>(findViewById(R.id.star_text), "star_text"),
                     new Pair<View, String>(findViewById(R.id.search_image), "search_image"),
@@ -195,6 +196,7 @@ public class LaunchActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
 
             Pair[] pairs = new Pair[]{
+                    new Pair<View, String>(findViewById(R.id.app_logo), "logo"),
                     new Pair<View, String>(findViewById(R.id.star_image), "star_image"),
                     new Pair<View, String>(findViewById(R.id.star_text), "star_text"),
                     new Pair<View, String>(findViewById(R.id.search_image), "search_image"),

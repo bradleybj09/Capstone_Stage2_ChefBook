@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -47,17 +50,19 @@ public class ShoppingListActivity extends AppCompatActivity{
     ContentResolver contentResolver;
     ListRecipeAdapter listRecipeAdapter;
     ListIngredientAdapter listIngredientAdapter;
-    View upButton;
     FrameLayout emptyLayout;
     GoogleApiClient mGoogleApiClient;
     final int MY_PERMISSION_REQUEST_LOCATION = 1;
     InterstitialAd mInterstitialAd;
+    ImageView upButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         contentResolver = getContentResolver();
         setContentView(R.layout.shopping_list_activity);
         emptyLayout = (FrameLayout)findViewById(R.id.empty_list_layout);
+        upButton = (ImageView)findViewById(R.id.list_action_up);
+        upButton.setColorFilter(ContextCompat.getColor(this, R.color.main_yellow));
         ListView recipeListView = (ListView)findViewById(R.id.list_recipe_listview);
         Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, null, null, null);
         if (rCursor.getCount() > 0) {
@@ -69,7 +74,7 @@ public class ShoppingListActivity extends AppCompatActivity{
             emptyLayout.setVisibility(View.VISIBLE);
         }
         setSupportActionBar((Toolbar)findViewById(R.id.list_toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .build();
@@ -113,6 +118,9 @@ public class ShoppingListActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_menu, menu);
+        Drawable mapIcon = menu.getItem(0).getIcon();
+        mapIcon.mutate();
+        mapIcon.setColorFilter(getResources().getColor(R.color.main_yellow), PorterDuff.Mode.SRC_ATOP);
         return true;
     }
 

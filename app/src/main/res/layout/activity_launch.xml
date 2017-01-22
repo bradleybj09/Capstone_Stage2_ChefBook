@@ -2,36 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/medium_grey"
     tools:context="com.example.android.chefbook.activities.LaunchActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
     <LinearLayout
+        android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="36dp">
 
-        <TextView
-            android:id="@+id/fullscreen_content"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/app_logo"
+            android:transitionName="logo"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:adjustViewBounds="true"
+            android:src="@drawable/chefbook_final"
+            android:gravity="center_horizontal"
             android:keepScreenOn="true"
-            android:text="@string/app_name"
-            android:textColor="#33b5e5"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            android:textAllCaps="false"/>
+            android:contentDescription="@string/app_name"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/get_started"
-            android:textColor="#33b5e5"
+            android:textColor="@color/main_yellow"
             android:textSize="24sp"
             android:layout_margin="16dp"/>
 
@@ -49,6 +50,7 @@
                 android:background="@drawable/rounded_rectangle"
                 android:layout_marginBottom="8dp"
                 android:elevation="4dp">
+
                 <ImageView
                     android:id="@+id/star_image"
                     android:transitionName="star_image"
@@ -59,12 +61,14 @@
                     android:scaleY="1.5"
                     android:layout_gravity="center"
                     android:padding="24dp"/>
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/colorAccent"/>
+                    android:background="@color/dark_grey"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -72,6 +76,7 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:paddingBottom="8dp">
+
                     <TextView
                         android:id="@+id/star_text"
                         android:transitionName="star_text"
@@ -83,6 +88,7 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:textStyle="bold"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -92,6 +98,7 @@
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:clickable="true"
                 android:onClick="onLaunchClickSearch"
@@ -101,6 +108,7 @@
                 android:background="@drawable/rounded_rectangle"
                 android:layout_marginBottom="8dp"
                 android:elevation="4dp">
+
                 <ImageView
                     android:id="@+id/search_image"
                     android:transitionName="search_image"
@@ -111,12 +119,14 @@
                     android:scaleY="1.5"
                     android:layout_gravity="center"
                     android:padding="24dp"/>
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/colorAccent"/>
+                    android:background="@color/dark_grey"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -124,6 +134,7 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:paddingBottom="8dp">
+
                     <TextView
                         android:id="@+id/search_text"
                         android:transitionName="search_text"
@@ -135,6 +146,7 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:textStyle="bold"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -144,6 +156,7 @@
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:clickable="true"
                 android:onClick="onLaunchClickRandom"
@@ -153,6 +166,7 @@
                 android:background="@drawable/rounded_rectangle"
                 android:layout_marginBottom="8dp"
                 android:elevation="4dp">
+
                 <ImageView
                     android:id="@+id/random_image"
                     android:transitionName="random_image"
@@ -163,12 +177,14 @@
                     android:scaleY="1.5"
                     android:layout_gravity="center"
                     android:padding="24dp"/>
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/colorAccent"/>
+                    android:background="@color/dark_grey"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -176,6 +192,7 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:paddingBottom="8dp">
+
                     <TextView
                         android:id="@+id/random_text"
                         android:transitionName="random_text"
@@ -187,6 +204,7 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:textStyle="bold"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -196,6 +214,7 @@
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:clickable="true"
                 android:onClick="onLaunchClickList"
@@ -205,6 +224,7 @@
                 android:background="@drawable/rounded_rectangle"
                 android:layout_marginBottom="8dp"
                 android:elevation="4dp">
+
                 <ImageView
                     android:id="@+id/list_image"
                     android:transitionName="list_image"
@@ -215,12 +235,14 @@
                     android:scaleY="1.5"
                     android:layout_gravity="center"
                     android:padding="24dp"/>
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/colorAccent"/>
+                    android:background="@color/dark_grey"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -228,6 +250,7 @@
                     android:paddingRight="8dp"
                     android:paddingLeft="8dp"
                     android:paddingBottom="8dp">
+
                     <TextView
                         android:id="@+id/list_text"
                         android:transitionName="list_text"
@@ -239,6 +262,7 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:textStyle="bold"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -248,7 +272,6 @@
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 

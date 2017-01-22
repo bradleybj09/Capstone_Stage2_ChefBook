@@ -3,7 +3,7 @@
 
     <item>
         <shape>
-            <solid android:color="@color/colorPrimaryDark"/>
+            <solid android:color="@color/light_grey"/>
 
             <padding
                 android:left="1dp"

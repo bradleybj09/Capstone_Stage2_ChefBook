@@ -3,14 +3,17 @@ package com.example.android.chefbook.activities;
 import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,8 +55,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     FloatingActionButton addRecipeButton;
     FloatingActionButton addListButton;
     FloatingActionButton removeRecipeButton;
-    View upButton;
+    ImageView upButton;
     ArrayList<Recipe> searchedRecipes;
+    Context mContext;
 
     @Override
     public void processRandomFinish(Recipe output) {
@@ -67,6 +71,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         readyTime = output.getReadyinMinutes();
         servings = output.getServings();
         ingredients = output.getIngredients();
+        if (instructions.equals("null")) {
+            instructions = "There are no instructions for this recipe!";
+        }
 
         TextView rPrepServingsTextView = (TextView)getView().findViewById(R.id.textview_minutes_servings);
         TextView rInstructionsTextView = (TextView)getView().findViewById(R.id.recipe_detail_instructions_body);
@@ -126,6 +133,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         readyTime = recipe.getReadyinMinutes();
         servings = recipe.getServings();
         ingredients = recipe.getIngredients();
+        if (instructions.equals("null")) {
+            instructions = "There are no instructions for this recipe!";
+        }
 
         TextView rPrepServingsTextView = (TextView)view.findViewById(R.id.textview_minutes_servings);
         TextView rInstructionsTextView = (TextView)view.findViewById(R.id.recipe_detail_instructions_body);
@@ -176,6 +186,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         readyTime = output.getReadyinMinutes();
         servings = output.getServings();
         ingredients = output.getIngredients();
+        if (instructions.equals("null")) {
+            instructions = "There are no instructions for this recipe!";
+        }
 
         TextView rPrepServingsTextView = (TextView)getView().findViewById(R.id.textview_minutes_servings);
         TextView rInstructionsTextView = (TextView)getView().findViewById(R.id.recipe_detail_instructions_body);
@@ -242,6 +255,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentResolver = getContext().getContentResolver();
+        mContext = getActivity();
     }
 
     public RecipeDetailFragment() {
@@ -259,8 +273,8 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.VeryVeryLongTitle);
             collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.VeryVeryLongTitle);
         }
-        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.title_text));
-        collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.title_text));
+        collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(mContext,R.color.main_yellow));
+        collapsingToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(mContext,R.color.main_yellow));
         collapsingToolbarLayout.setTitle(title);
 
         if (isMyRecipe()) {
@@ -304,7 +318,8 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContainer = container;
         View rootView = inflater.inflate(R.layout.recipe_detail_fragment,container,false);
-        upButton = rootView.findViewById(R.id.action_up);
+        upButton = (ImageView)rootView.findViewById(R.id.action_up);
+        upButton.setColorFilter(ContextCompat.getColor(mContext,R.color.main_yellow));
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -332,7 +347,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
         collapsingToolbarLayout = (CollapsingToolbarLayout)rootView.findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.colorPrimary));
+        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(mContext,R.color.medium_grey));
         Intent intent = getActivity().getIntent();
         if (intent.hasExtra("full_recipe")){
             Recipe recipe = intent.getExtras().getParcelable("full_recipe");
