@@ -217,14 +217,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:theme="@style/AppTheme.YellowAccent"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/loading"
-            android:textColor="@color/colorAccent"
+            android:theme="@style/AppTheme.YellowAccent"
             android:layout_centerHorizontal="true"
-            android:layout_above="@id/progress_wheel"/>
+            android:layout_above="@id/progress_wheel"
+            android:textSize="24sp"
+            android:padding="16dp"/>
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

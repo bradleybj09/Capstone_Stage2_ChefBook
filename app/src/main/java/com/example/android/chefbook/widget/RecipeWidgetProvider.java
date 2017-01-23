@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 
@@ -27,45 +28,41 @@ import java.net.URL;
  * Created by Ben on 1/19/2017.
  */
 
-public class RecipeWidgetProvider extends AppWidgetProvider implements FetchRandomRecipe.AsyncRandomResponse {
+public class RecipeWidgetProvider extends AppWidgetProvider {
 
     public static final String LAUNCH_ACTION = "com.example.android.recipewidget.LAUNCH_ACTION";
-    public static final String UPDATE = "com.example.android.recipewidget.UPDATE_ACTION";
-    String recipeTitle;
-    String imagePath;
-    Recipe recipe;
-    Context mContext;
-    AppWidgetManager mAppWidgetManager;
-    int[] mAppWidgetIds;
 
     @Override
-    public void processRandomFinish(Recipe output) {
-        this.recipe = output;
-        recipeTitle = output.getTitle();
-        imagePath = output.getRecipeImageURL();
-
-        for (int i = 0; i < mAppWidgetIds.length; i++) {
-            RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_layout);
-            remoteViews.setTextViewText(R.id.widget_textview, recipeTitle);
-            Intent launchIntent = new Intent(mContext, MainActivity.class);
-            launchIntent.putExtra("full_recipe",recipe);
-            remoteViews.setOnClickFillInIntent(R.id.widget_button, launchIntent);
-            mAppWidgetManager.updateAppWidget(mAppWidgetIds[i], remoteViews);
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().equals(LAUNCH_ACTION)) {
+            Log.e("onreceive","launch started");
+            Intent launchIntent = new Intent(context,MainActivity.class);
+            launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            launchIntent.putExtra("launch", "Random");
+            context.startActivity(launchIntent);
         }
-
+        super.onReceive(context, intent);
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        FetchRandomRecipe fetchRandomRecipe = new FetchRandomRecipe(this);
-        fetchRandomRecipe.execute();
+        for (int appwidgetid : appWidgetIds) {
 
-        mContext = context;
-        mAppWidgetManager = appWidgetManager;
-        mAppWidgetIds = appWidgetIds;
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
+            Intent intent = new Intent(context, RecipeWidgetProvider.class);
+            intent.setAction(LAUNCH_ACTION);
+            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+            //      remoteViews.setOnClickFillInIntent(R.id.widget_button, intent);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+            remoteViews.setOnClickPendingIntent(R.id.widget_button, pendingIntent);
+
+            appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
+            super.onUpdate(context, appWidgetManager, appWidgetIds);
+        }
     }
 
 }
