@@ -41,7 +41,9 @@
             android:background="@drawable/rounded_rectangle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp">
 
             <LinearLayout
                 android:clickable="true"

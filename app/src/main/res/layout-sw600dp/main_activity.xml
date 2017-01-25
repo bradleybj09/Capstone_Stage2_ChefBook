@@ -9,13 +9,13 @@
     <fragment
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="3"
         tools:layout="@android:layout/list_content"
         android:name="com.example.android.chefbook.activities.GridviewFragment"
         android:id="@+id/fragment_main"/>
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="4"
+        android:layout_weight="5"
         android:id="@+id/recipe_detail_container"/>
 </LinearLayout>

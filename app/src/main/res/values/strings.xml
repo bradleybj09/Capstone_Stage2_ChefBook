@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ChefBook</string>
-    <string name="instructions">Please choose a recipe to view details</string>
+    <string name="instructions">Choose a recipe to view more details</string>
     <string name="shopping_list">Shopping List</string>
     <string name="my_recipes">My Recipes</string>
     <string name="search_results">Search Results</string>
@@ -36,6 +36,7 @@
     <string name="launch_random">Feeling bold? Go for the unknown!</string>
     <string name="empty_list">Your shopping list is empty! \n\nAdd some recipes before you go to the store.</string>
     <string name="ad_unit_id">ca-app-pub-5551247818101576/7259317249</string>
-    <string name="ad_app_id">222D53C89DF31924ACA6B2C02D748779</string>
+    <string name="ad_test_id_tablet">4B36A9FBD18ADF42523E969BDDF50955</string>
+    <string name="ad_test_id_phone">222D53C89DF31924ACA6B2C02D748779</string>
     <string name="try_today">Try a new recipe today!</string>
 </resources>

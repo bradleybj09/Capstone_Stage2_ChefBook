@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.util.Pair;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.android.chefbook.R;
 
@@ -213,8 +215,15 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     public void onLaunchClickRandom(View view) {
-            Intent intent = new Intent(this,RecipeDetailActivity.class).putExtra("random",1);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        if (displayMetrics.widthPixels > 600 && displayMetrics.heightPixels > 600) {
+            Intent intent = new Intent(this, MainActivity.class).putExtra("launch", "Random");
             startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, RecipeDetailActivity.class).putExtra("random", 1);
+            startActivity(intent);
+        }
     }
 
     public void onLaunchClickList(View view) {

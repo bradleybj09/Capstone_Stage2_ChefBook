@@ -1,12 +1,13 @@
 package com.example.android.chefbook.activities;
 
-import android.app.SearchManager;
+import android.app.Application;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +60,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
     ImageView upButton;
     ArrayList<Recipe> searchedRecipes;
     Context mContext;
+    FetchRandomRecipe fetchRandomRecipe;
 
     @Override
     public void processRandomFinish(Recipe output) {
@@ -262,6 +265,14 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
 
     }
 
+    @Override
+    public void onDestroy() {
+        if (fetchRandomRecipe != null) {
+            fetchRandomRecipe.cancel(true);
+        }
+        super.onDestroy();
+    }
+
     public void finalizeUI() {
         if(title.length() > 20){
             collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.LongTitle);
@@ -324,7 +335,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             @Override
             public void onClick(View v) {
                 if (searchedRecipes != null) {
-                    Intent intent = new Intent(getActivity(),MainActivity.class);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
                     intent.setAction("rebuild_search");
                     intent.putExtra("recipes", searchedRecipes);
                     startActivity(intent);
@@ -334,6 +345,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
                 }
             }
         });
+
         Toolbar toolbar = (Toolbar)rootView.findViewById(R.id.detail_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         AppBarLayout appBarLayout = (AppBarLayout)rootView.findViewById(R.id.detail_appbar);
@@ -349,11 +361,22 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         collapsingToolbarLayout = (CollapsingToolbarLayout)rootView.findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(mContext,R.color.medium_grey));
         Intent intent = getActivity().getIntent();
+        Bundle arguments = getArguments();
         if (intent.hasExtra("full_recipe")){
             Recipe recipe = intent.getExtras().getParcelable("full_recipe");
             populateMyRecipe(recipe,rootView);
             return rootView;
-        } else if (intent.getData() == null && getArguments() != null) {
+        } else if (arguments != null && arguments.getInt("random") == 1) {
+            rootView.findViewById(R.id.progress_screen).setVisibility(View.VISIBLE);
+            fetchRandomRecipe = new FetchRandomRecipe(this);
+            fetchRandomRecipe.execute();
+            return rootView;
+        } else if (intent.hasExtra("random")) {
+            rootView.findViewById(R.id.progress_screen).setVisibility(View.VISIBLE);
+            fetchRandomRecipe = new FetchRandomRecipe(this);
+            fetchRandomRecipe.execute();
+            return rootView;
+        } else if (intent.getData() == null && arguments != null) {
             Bundle b = getArguments();
             recipeID = b.getInt("recipeID");
             if (recipeID == 0) {
@@ -361,16 +384,9 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
                 populateMyRecipe(recipe,rootView);
                 return rootView;
             }
-        }
-        else if (intent.hasExtra("recipeID")) {
+        } else if (intent.hasExtra("recipeID")) {
             recipeID = intent.getExtras().getInt("recipeID");
             searchedRecipes = intent.getExtras().getParcelableArrayList("recipes");
-        }
-        else if (intent.hasExtra("random") || getArguments().getInt("random") == 1) {
-            rootView.findViewById(R.id.progress_screen).setVisibility(View.VISIBLE);
-            FetchRandomRecipe fetchRandomRecipe = new FetchRandomRecipe(this);
-            fetchRandomRecipe.execute();
-            return rootView;
         }
         if (recipeID == 0) {
             rootView = inflater.inflate(R.layout.start_split_detail,container,false);

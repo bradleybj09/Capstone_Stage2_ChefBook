@@ -63,6 +63,12 @@ public class ShoppingListActivity extends AppCompatActivity{
         emptyLayout = (FrameLayout)findViewById(R.id.empty_list_layout);
         upButton = (ImageView)findViewById(R.id.list_action_up);
         upButton.setColorFilter(ContextCompat.getColor(this, R.color.main_yellow));
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSupportNavigateUp();
+            }
+        });
         ListView recipeListView = (ListView)findViewById(R.id.list_recipe_listview);
         Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, null, null, null);
         if (rCursor.getCount() > 0) {
@@ -94,7 +100,8 @@ public class ShoppingListActivity extends AppCompatActivity{
 
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(getString(R.string.ad_app_id))
+                .addTestDevice(getString(R.string.ad_test_id_phone))
+                .addTestDevice("4B36A9FBD18ADF42523E969BDDF50955")
                 .build();
         mInterstitialAd.loadAd(adRequest);
     }

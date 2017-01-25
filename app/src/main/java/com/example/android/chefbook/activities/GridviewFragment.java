@@ -43,7 +43,7 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
 
     FetchedRecipeAdapter fetchedRecipeAdapter;
     MyRecipeAdapter myRecipeAdapter;
-    ArrayList<Recipe> recipes;
+    public ArrayList<Recipe> recipes;
     ContentResolver contentResolver;
     GridView gridView;
 
@@ -75,6 +75,7 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
             recipes = activityIntent.getExtras().getParcelableArrayList("recipes");
         }
         Log.d("GridviewFrag onCreate","Finished");
+        setRetainInstance(true);
     }
 
     @Nullable
