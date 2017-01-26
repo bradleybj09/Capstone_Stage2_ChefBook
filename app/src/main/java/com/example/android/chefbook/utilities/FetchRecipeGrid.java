@@ -122,9 +122,7 @@ public class FetchRecipeGrid extends AsyncTask<String, Void, ArrayList<Recipe>> 
     @Override
     protected void onPostExecute(ArrayList<Recipe> recipes) {
         super.onPostExecute(recipes);
-        if (recipes != null) {
-            delegate.processFinish(recipes);
-        }
+        delegate.processFinish(recipes);
     }
 
     private ArrayList<Recipe> getRecipeFromJson(String RecipeJson, boolean Targeted) throws JSONException {

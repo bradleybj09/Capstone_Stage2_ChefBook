@@ -216,6 +216,39 @@
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <FrameLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/empty_recipes_layout"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/empty_recipes"
+            android:textSize="36sp"
+            android:padding="16dp"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/bad_search_layout"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/bad_search"
+            android:textSize="36sp"
+            android:padding="16dp"/>
+    </FrameLayout>
+
     <GridView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/gridview"

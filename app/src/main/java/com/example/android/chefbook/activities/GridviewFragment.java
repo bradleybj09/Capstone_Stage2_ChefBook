@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -46,6 +47,8 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     public ArrayList<Recipe> recipes;
     ContentResolver contentResolver;
     GridView gridView;
+    FrameLayout emptyRecipeLayout;
+    FrameLayout badSearchLayout;
 
     public GridviewFragment() {
 
@@ -64,6 +67,9 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
                 ((MainActivity)getActivity()).launchRecipeDetail(recipes.get(i).getRecipeID(), recipes);
             }
         });
+        if (recipes.size() == 0) {
+            badSearchLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -82,6 +88,8 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.gridview_parent, container, false);
+        badSearchLayout = (FrameLayout)rootView.findViewById(R.id.bad_search_layout);
+        emptyRecipeLayout = (FrameLayout)rootView.findViewById(R.id.empty_recipes_layout);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             rootView.findViewById(R.id.gridview).setVisibility(View.GONE);
             rootView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -110,11 +118,17 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     }
 
     public void fetchMyRecipes() {
+        emptyRecipeLayout.setVisibility(View.GONE);
+        badSearchLayout.setVisibility(View.GONE);
         Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.RECIPE_CONTENT_URI, null, null, null, null);
         gridView = (GridView)getView().findViewById(R.id.gridview);
         ViewCompat.setNestedScrollingEnabled(gridView,true);
         myRecipeAdapter = new MyRecipeAdapter(getActivity(),rCursor,0);
         gridView.setAdapter(myRecipeAdapter);
+        if (rCursor.getCount() == 0) {
+            emptyRecipeLayout.setVisibility(View.VISIBLE);
+            return;
+        }
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -149,6 +163,8 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
     }
 
     public void fetchTargetedRecipes(String query) {
+        badSearchLayout.setVisibility(View.GONE);
+        emptyRecipeLayout.setVisibility(View.GONE);
         FetchRecipeGrid fetchRecipeGrid = new FetchRecipeGrid(this);
         fetchRecipeGrid.execute(query);
     }

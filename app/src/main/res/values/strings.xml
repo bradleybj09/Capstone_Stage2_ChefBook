@@ -39,4 +39,6 @@
     <string name="ad_test_id_tablet">4B36A9FBD18ADF42523E969BDDF50955</string>
     <string name="ad_test_id_phone">222D53C89DF31924ACA6B2C02D748779</string>
     <string name="try_today">Try a new recipe today!</string>
+    <string name="bad_search">Your search did not return any results. Try something else!</string>
+    <string name="empty_recipes">You have no saved recipes! Search for some, or surprise yourself with something random.</string>
 </resources>
