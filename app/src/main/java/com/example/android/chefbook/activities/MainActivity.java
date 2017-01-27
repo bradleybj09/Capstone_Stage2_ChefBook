@@ -60,11 +60,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (intent.getAction().equals("search")) {
 
         }
-        Log.d("MainActivity/onCreate","Finished");
     }
 
     public void launchRecipeDetail(int recipeID, ArrayList<Recipe> recipes) {
-        Log.d("MainLaunchDetail","Initiated");
         if (mTwoPane) {
             RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
             Bundle b = new Bundle();
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchRecipeDetail(Recipe recipe) {
-        Log.d("MainLaunchDetail","Initiated");
         if (mTwoPane) {
             RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
             Bundle b = new Bundle();
@@ -93,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getRandomRecipe(View view) {
-        Log.d("MainLaunchDetail","Initiated");
         if (mTwoPane) {
             RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
             Bundle b = new Bundle();

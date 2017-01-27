@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/chefbook_final"
+            android:src="@drawable/chefbook"
             android:gravity="center_horizontal"
             android:keepScreenOn="true"
             android:contentDescription="@string/app_name"/>
@@ -53,6 +53,7 @@
                 android:background="?android:selectableItemBackground">
 
                 <ImageView
+                    android:contentDescription="@string/my_recipes"
                     android:id="@+id/star_image"
                     android:transitionName="star_image"
                     android:src="@drawable/ic_star_black_24dp"
@@ -115,6 +116,7 @@
                 android:background="?android:selectableItemBackground">
 
                 <ImageView
+                    android:contentDescription="@string/search"
                     android:id="@+id/search_image"
                     android:transitionName="search_image"
                     android:src="@drawable/ic_search_black_24dp"
@@ -177,6 +179,7 @@
                 android:background="?android:selectableItemBackground">
 
                 <ImageView
+                    android:contentDescription="@string/random"
                     android:id="@+id/random_image"
                     android:transitionName="random_image"
                     android:src="@drawable/ic_shuffle_black_24dp"
@@ -239,6 +242,7 @@
                 android:background="?android:selectableItemBackground">
 
                 <ImageView
+                    android:contentDescription="@string/shopping_list"
                     android:id="@+id/list_image"
                     android:transitionName="list_image"
                     android:src="@drawable/ic_filter_none_black_24dp"

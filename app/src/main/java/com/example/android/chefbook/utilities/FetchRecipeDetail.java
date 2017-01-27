@@ -35,8 +35,7 @@ public class FetchRecipeDetail extends AsyncTask<String, Void, Recipe> {
 
     @Override
     protected Recipe doInBackground(String... strings) {
-
-        String apiKey = "yMn7M1DywmmshjLnVrGx90sD2ESIp1XfB2ijsnfU7kDaPhYGLb";
+        String apiKey = "Enter api key here";
         HttpURLConnection urlConnection = null;
         BufferedReader bufferedReader = null;
         String recipeJsonStr;
@@ -44,14 +43,12 @@ public class FetchRecipeDetail extends AsyncTask<String, Void, Recipe> {
 
         try {
             URL url = new URL(currentURL);
-            Log.d("URL", currentURL);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(true);
             urlConnection.setRequestProperty("X-Mashape-Key", apiKey);
             urlConnection.setRequestProperty("Accept", "application/json");
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoOutput(false);
-            Log.d("Response Code", String.valueOf(urlConnection.getResponseCode()));
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer stringBuffer = new StringBuffer();
             if (inputStream == null) {
@@ -68,9 +65,7 @@ public class FetchRecipeDetail extends AsyncTask<String, Void, Recipe> {
                 recipeJsonStr = null;
             }
             recipeJsonStr = stringBuffer.toString();
-            Log.d("JSON", recipeJsonStr);
         } catch (IOException e) {
-            Log.e("PlaceholderFragment", "Error ", e);
             recipeJsonStr = null;
         } finally {
             if (urlConnection != null) {
@@ -80,7 +75,6 @@ public class FetchRecipeDetail extends AsyncTask<String, Void, Recipe> {
                 try {
                     bufferedReader.close();
                 } catch (final IOException e) {
-                    Log.e("PlaceholderFragment", "Error closing stream", e);
                 }
             }
         }
@@ -89,7 +83,6 @@ public class FetchRecipeDetail extends AsyncTask<String, Void, Recipe> {
                 Recipe returnRecipe = getDetailFromJson(recipeJsonStr);
                 return returnRecipe;
             } catch (JSONException e) {
-                Log.e("Async1", e.getMessage());
                 e.printStackTrace();
             }
         } return null;

@@ -8,6 +8,7 @@
     android:background="@drawable/rounded_rectangle">
 
     <ImageView
+        android:contentDescription="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="72dp"
         android:scaleType="fitCenter"
@@ -22,6 +23,7 @@
         android:orientation="vertical">
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:src="@drawable/chefbook_title_only"
             android:layout_width="wrap_content"
             android:layout_height="24dp"

@@ -75,7 +75,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         servings = output.getServings();
         ingredients = output.getIngredients();
         if (instructions.equals("null")) {
-            instructions = "There are no instructions for this recipe!";
+            instructions = getString(R.string.no_instructions);
         }
 
         TextView rPrepServingsTextView = (TextView)getView().findViewById(R.id.textview_minutes_servings);
@@ -137,7 +137,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         servings = recipe.getServings();
         ingredients = recipe.getIngredients();
         if (instructions.equals("null")) {
-            instructions = "There are no instructions for this recipe!";
+            instructions = getString(R.string.no_instructions);
         }
 
         TextView rPrepServingsTextView = (TextView)view.findViewById(R.id.textview_minutes_servings);
@@ -190,7 +190,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         servings = output.getServings();
         ingredients = output.getIngredients();
         if (instructions.equals("null")) {
-            instructions = "There are no instructions for this recipe!";
+            instructions = getString(R.string.no_instructions);
         }
 
         TextView rPrepServingsTextView = (TextView)getView().findViewById(R.id.textview_minutes_servings);
@@ -417,7 +417,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             contentResolver.insert(MyRecipesContract.TableMyRecipes.RECIPE_CONTENT_URI, recipeContentValues);
         }
         else {
-            Log.d("add recipe","null content resolver");
         }
         for (int x = 0; x < ingredients.length; x++) {
             ContentValues ingredientContentValues = new ContentValues();
@@ -434,7 +433,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
                 contentResolver.insert(MyRecipesContract.TableMyRecipes.INGREDIENT_CONTENT_URI, ingredientContentValues);
             }
             else {
-                Log.d("add ingredients","null content resolver");
             }
         }
         addRecipeButton.setVisibility(View.GONE);
@@ -451,7 +449,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             contentResolver.insert(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, recipeContentValues);
         }
         else {
-            Log.d("add recipe","null content resolver");
         }
 
         for (int x = 0; x < ingredients.length; x++) {
@@ -468,7 +465,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
                 contentResolver.insert(MyRecipesContract.TableMyRecipes.LIST_INGREDIENT_CONTENT_URI, ingredientContentValues);
             }
             else {
-                Log.d("add ingredients","null content resolver");
             }
         }
     }

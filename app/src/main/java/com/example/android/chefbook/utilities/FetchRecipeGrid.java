@@ -36,8 +36,7 @@ public class FetchRecipeGrid extends AsyncTask<String, Void, ArrayList<Recipe>> 
 
     @Override
     protected ArrayList<Recipe> doInBackground(String... strings) {
-        Log.d("doInBackground","Initiated");
-        String apiKey = "yMn7M1DywmmshjLnVrGx90sD2ESIp1XfB2ijsnfU7kDaPhYGLb";
+        String apiKey = "Enter api key here";
         HttpURLConnection urlConnection = null;
         BufferedReader bufferedReader = null;
         String recipeJsonStr;
@@ -46,7 +45,6 @@ public class FetchRecipeGrid extends AsyncTask<String, Void, ArrayList<Recipe>> 
         try {
             query = java.net.URLEncoder.encode(strings[0], "utf-8");
         } catch (UnsupportedEncodingException e) {
-            Log.e("Query Encoding","Failed");
         }
         if (strings.length == 0) {
             currentURL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/random?limitLicense=false&number=24";
@@ -57,14 +55,12 @@ public class FetchRecipeGrid extends AsyncTask<String, Void, ArrayList<Recipe>> 
 
         try {
             URL url = new URL(currentURL);
-            Log.d("URL", currentURL);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(true);
             urlConnection.setRequestProperty("X-Mashape-Key",apiKey);
             urlConnection.setRequestProperty("Accept","application/json");
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoOutput(false);
-            Log.d("Response Code",String.valueOf(urlConnection.getResponseCode()));
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer stringBuffer = new StringBuffer();
             if (inputStream == null) {
@@ -81,9 +77,7 @@ public class FetchRecipeGrid extends AsyncTask<String, Void, ArrayList<Recipe>> 
                 recipeJsonStr = null;
             }
             recipeJsonStr = stringBuffer.toString();
-            Log.d("JSON",recipeJsonStr);
         } catch (IOException e) {
-            Log.e("PlaceholderFragment", "Error ", e);
             recipeJsonStr = null;
         } finally {
             if (urlConnection != null) {
@@ -93,7 +87,6 @@ public class FetchRecipeGrid extends AsyncTask<String, Void, ArrayList<Recipe>> 
                 try {
                     bufferedReader.close();
                 } catch (final IOException e) {
-                    Log.e("PlaceholderFragment", "Error closing stream", e);
                 }
             }
         }
@@ -102,18 +95,15 @@ public class FetchRecipeGrid extends AsyncTask<String, Void, ArrayList<Recipe>> 
                 if (strings.length == 0) {
                     ArrayList<Recipe> finalRecipes = getRecipeFromJson(recipeJsonStr, false);
                     for (int i = 0; i < finalRecipes.size(); i++) {
-                        Log.d("Recipe " + String.valueOf(i), String.valueOf(finalRecipes.get(i).getRecipeID()));
                     }
                     return finalRecipes;
                 } else {
                     ArrayList<Recipe> finalRecipes = getRecipeFromJson(recipeJsonStr, true);
                     for (int i = 0; i < finalRecipes.size(); i++) {
-                        Log.d("Recipe " + String.valueOf(i),String.valueOf(finalRecipes.get(i).getRecipeID()));
                     }
                     return finalRecipes;
                 }
             } catch (JSONException e) {
-                Log.e("Async1",e.getMessage());
                 e.printStackTrace();
             }
         } return null;
@@ -146,7 +136,6 @@ public class FetchRecipeGrid extends AsyncTask<String, Void, ArrayList<Recipe>> 
 
         if (recipeJsonArray != null) {
             for (int i = 0; i < recipeJsonArray.length(); i++) {
-                Log.d("rounds",String.valueOf(i));
                 if (recipeJsonArray.getJSONObject(i).optString(TITLE) != "") {
                     int recipeID = recipeJsonArray.getJSONObject(i).getInt(ID);
                     String recipeTitle = recipeJsonArray.getJSONObject(i).getString(TITLE);

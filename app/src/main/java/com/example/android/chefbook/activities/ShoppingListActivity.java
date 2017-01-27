@@ -16,7 +16,10 @@ import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -46,21 +49,48 @@ import com.google.android.gms.location.LocationServices;
  * Created by Ben on 1/2/2017.
  */
 
-public class ShoppingListActivity extends AppCompatActivity{
+public class ShoppingListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    final static int LOADER_ID = 1;
     ContentResolver contentResolver;
     ListRecipeAdapter listRecipeAdapter;
     ListIngredientAdapter listIngredientAdapter;
     FrameLayout emptyLayout;
+    ListView recipeListView;
     GoogleApiClient mGoogleApiClient;
     final int MY_PERMISSION_REQUEST_LOCATION = 1;
     InterstitialAd mInterstitialAd;
     ImageView upButton;
 
     @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this, MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, null, null, null);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        listRecipeAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        listRecipeAdapter.swapCursor(data);
+        if (data.getCount() > 0) {
+            populateIngredientList();
+            recipeListView.setAdapter(listRecipeAdapter);
+        }
+        else {
+            emptyLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
         contentResolver = getContentResolver();
         setContentView(R.layout.shopping_list_activity);
         emptyLayout = (FrameLayout)findViewById(R.id.empty_list_layout);
+        listRecipeAdapter = new ListRecipeAdapter(this, null, 0);
         upButton = (ImageView)findViewById(R.id.list_action_up);
         upButton.setColorFilter(ContextCompat.getColor(this, R.color.main_yellow));
         upButton.setOnClickListener(new View.OnClickListener() {
@@ -69,16 +99,8 @@ public class ShoppingListActivity extends AppCompatActivity{
                 onSupportNavigateUp();
             }
         });
-        ListView recipeListView = (ListView)findViewById(R.id.list_recipe_listview);
-        Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, null, null, null);
-        if (rCursor.getCount() > 0) {
-            populateIngredientList();
-            listRecipeAdapter = new ListRecipeAdapter(this, rCursor, 0);
-            recipeListView.setAdapter(listRecipeAdapter);
-        }
-        else {
-            emptyLayout.setVisibility(View.VISIBLE);
-        }
+        recipeListView = (ListView)findViewById(R.id.list_recipe_listview);
+     //   Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, null, null, null);
         setSupportActionBar((Toolbar)findViewById(R.id.list_toolbar));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -137,7 +159,7 @@ public class ShoppingListActivity extends AppCompatActivity{
             case R.id.action_map:
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                        Toast toast = Toast.makeText(this,"ChefBook needs to access your location to find the nearest grocery stores",Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(this,getString(R.string.access_location),Toast.LENGTH_SHORT);
                         toast.show();
                     } else {
                         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},MY_PERMISSION_REQUEST_LOCATION);
@@ -153,7 +175,7 @@ public class ShoppingListActivity extends AppCompatActivity{
                         startActivity(mapIntent);
                     }
                     else {
-                        Toast noMapToast = Toast.makeText(this,"You have no map app available",Toast.LENGTH_SHORT);
+                        Toast noMapToast = Toast.makeText(this,getString(R.string.no_map),Toast.LENGTH_SHORT);
                         noMapToast.show();
                     }
                     return true;
@@ -179,7 +201,7 @@ public class ShoppingListActivity extends AppCompatActivity{
                     if (mapIntent.resolveActivity(getPackageManager()) != null) {
                         startActivity(mapIntent);
                     } else {
-                        Toast noMapToast = Toast.makeText(this, "You have no map app available", Toast.LENGTH_SHORT);
+                        Toast noMapToast = Toast.makeText(this, getString(R.string.no_map), Toast.LENGTH_SHORT);
                         noMapToast.show();
                     }
                 }
@@ -248,7 +270,7 @@ public class ShoppingListActivity extends AppCompatActivity{
         new AlertDialog.Builder(this)
                 .setTitle(R.string.clear_shopping)
                 .setMessage(getResources().getString(R.string.clear_message))
-                .setPositiveButton("I'm sure", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         onListEmptied();
@@ -257,7 +279,7 @@ public class ShoppingListActivity extends AppCompatActivity{
                         recreate();
                     }
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton(getString(R.string.no), null)
                 .show();
     }
 

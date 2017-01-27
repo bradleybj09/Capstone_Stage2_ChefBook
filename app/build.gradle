@@ -3,9 +3,9 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'BensAndroidKey'
+            keyAlias 'chefbook'
             keyPassword 'B@ss00n0'
-            storeFile file('C:/Users/Ben/Keystores/android.jks')
+            storeFile file("$rootDir/keystore.jks")
             storePassword 'bassoon0'
         }
     }

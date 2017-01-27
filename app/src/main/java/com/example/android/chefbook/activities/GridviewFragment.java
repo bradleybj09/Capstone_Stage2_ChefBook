@@ -80,7 +80,6 @@ public class GridviewFragment extends Fragment implements FetchRecipeGrid.AsyncR
         if ("rebuild_search".equals(activityIntent.getAction())) {
             recipes = activityIntent.getExtras().getParcelableArrayList("recipes");
         }
-        Log.d("GridviewFrag onCreate","Finished");
         setRetainInstance(true);
     }
 

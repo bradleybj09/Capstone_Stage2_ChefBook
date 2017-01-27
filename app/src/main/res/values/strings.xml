@@ -41,4 +41,12 @@
     <string name="try_today">Try a new recipe today!</string>
     <string name="bad_search">Your search did not return any results. Try something else!</string>
     <string name="empty_recipes">You have no saved recipes! Search for some, or surprise yourself with something random.</string>
+    <string name="no_instructions">There are no instructions for this recipe!</string>
+    <string name="access_location">ChefBook needs to access your location to find the nearest grocery stores.</string>
+    <string name="no_map">You have no map app available</string>
+    <string name="sure">I am sure</string>
+    <string name="no">No</string>
+    <string name="remove_list_ingredient">Remove ingredient from shopping list</string>
+    <string name="remove_list_recipe">Remove recipe from shopping list</string>
+    <string name="recipe_image">Image of recipe</string>
 </resources>

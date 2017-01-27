@@ -35,7 +35,6 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(LAUNCH_ACTION)) {
-            Log.e("onreceive","launch started");
             Intent launchIntent = new Intent(context,MainActivity.class);
             launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             launchIntent.putExtra("launch", "Random");
@@ -54,7 +53,6 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             Intent intent = new Intent(context, RecipeWidgetProvider.class);
             intent.setAction(LAUNCH_ACTION);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-            //      remoteViews.setOnClickFillInIntent(R.id.widget_button, intent);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 

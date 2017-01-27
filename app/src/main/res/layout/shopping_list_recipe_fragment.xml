@@ -13,6 +13,7 @@
         android:textSize="16sp"/>
 
     <ImageView
+        android:contentDescription="@string/remove_list_recipe"
         android:clickable="true"
         android:onClick="removeListRecipe"
         android:layout_alignParentRight="true"
