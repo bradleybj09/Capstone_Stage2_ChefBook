@@ -4,9 +4,9 @@ android {
     signingConfigs {
         config {
             keyAlias 'chefbook'
-            keyPassword 'B@ss00n0'
-            storeFile file("$rootDir/keystore.jks")
-            storePassword 'bassoon0'
+            keyPassword 'password'
+            storeFile file('keystore.jks')
+            storePassword 'password'
         }
     }
     compileSdkVersion 25
