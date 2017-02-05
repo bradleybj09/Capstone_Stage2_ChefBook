@@ -4,9 +4,9 @@
     android:id="@+id/fragment_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.chefbook.activities.MainActivity"
+    tools:context="com.iambenbradley.android.chefbook.activities.MainActivity"
     tools:ignore="MergeRootFrame"
     tools:layout="@android:layout/list_content"
-    android:name="com.example.android.chefbook.activities.GridviewFragment">
+    android:name="com.iambenbradley.android.chefbook.activities.GridviewFragment">
 
 </fragment>

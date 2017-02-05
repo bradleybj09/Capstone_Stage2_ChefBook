@@ -3,7 +3,7 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.chefbook.activities.MainActivity"
+    tools:context="com.iambenbradley.android.chefbook.activities.MainActivity"
     android:baselineAligned="false"
     >
     <fragment
@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_weight="3"
         tools:layout="@android:layout/list_content"
-        android:name="com.example.android.chefbook.activities.GridviewFragment"
+        android:name="com.iambenbradley.android.chefbook.activities.GridviewFragment"
         android:id="@+id/fragment_main"/>
     <FrameLayout
         android:layout_width="0dp"

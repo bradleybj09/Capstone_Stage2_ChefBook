@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.example.android.chefbook.utilities.SquareImageView
+        <com.iambenbradley.android.chefbook.utilities.SquareImageView
             android:id="@+id/gridview_recipe_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
