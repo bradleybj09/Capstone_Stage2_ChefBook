@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ChefBook.iml" filepath="$PROJECT_DIR$/ChefBook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Capstone_Stage2_ChefBook.iml" filepath="$PROJECT_DIR$/Capstone_Stage2_ChefBook.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
