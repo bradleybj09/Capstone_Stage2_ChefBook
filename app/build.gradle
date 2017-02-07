@@ -4,9 +4,9 @@ android {
     signingConfigs {
         config {
             keyAlias 'chefbook'
-            keyPassword 'password'
-            storeFile file('keystore.jks')
-            storePassword 'password'
+            keyPassword 'B@ss00n0'
+            storeFile file('C:/Users/Ben/keystores/keystore.jks')
+            storePassword 'bassoon0'
         }
     }
     compileSdkVersion 25
@@ -15,8 +15,8 @@ android {
         applicationId "com.iambenbradley.android.chefbook"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {

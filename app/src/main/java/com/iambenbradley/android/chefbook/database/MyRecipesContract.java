@@ -10,7 +10,7 @@ import android.provider.BaseColumns;
  */
 
 public class MyRecipesContract {
-    public static final String CONTENT_AUTHORITY = "com.example.android.chefbook";
+    public static final String CONTENT_AUTHORITY = "com.iambenbradley.android.chefbook";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_RECIPES = "myrecipes";
     public static final String PATH_INGREDIENTS = "ingredients";
