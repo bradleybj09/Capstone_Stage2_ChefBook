@@ -35,7 +35,7 @@ public class MyRecipeAdapter extends CursorAdapter {
         String imageURL = cursor.getString(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_IMAGE));
         String title = cursor.getString(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_TITLE));
         int recipeID = cursor.getInt(cursor.getColumnIndexOrThrow(MyRecipesContract.TableMyRecipes.COLUMN_RECIPE_ID));
-        Picasso.with(context).load(imageURL).into(imageView);
+        Picasso.with(context).load(imageURL).fit().centerCrop().into(imageView);
         textView.setText(title);
     }
 }

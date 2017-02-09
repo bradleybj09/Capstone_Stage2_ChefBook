@@ -78,7 +78,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         ImageView rImageView = (ImageView)getView().findViewById(R.id.recipe_detail_image);
 
         rInstructionsTextView.setText(instructions);
-        Picasso.with(getActivity()).load(imageURL).into(rImageView, new Callback() {
+        Picasso.with(getActivity()).load(imageURL).fit().centerCrop().into(rImageView, new Callback() {
             @Override
             public void onSuccess() {
                 loadingView.setVisibility(View.GONE);
@@ -329,15 +329,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (searchedRecipes != null) {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.setAction("rebuild_search");
-                    intent.putExtra("recipes", searchedRecipes);
-                    startActivity(intent);
-
-                } else {
-                    ((AppCompatActivity) getActivity()).onSupportNavigateUp();
-                }
+                getActivity().onBackPressed();
             }
         });
 

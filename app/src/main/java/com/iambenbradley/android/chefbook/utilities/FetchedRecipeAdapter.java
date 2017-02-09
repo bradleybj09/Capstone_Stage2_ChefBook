@@ -51,7 +51,7 @@ public class FetchedRecipeAdapter extends BaseAdapter {
         }
         SquareImageView imageView = (SquareImageView)view.findViewById(R.id.gridview_recipe_image);
         TextView textView = (TextView)view.findViewById(R.id.gridview_recipe_title);
-        Picasso.with(mContext).load(recipes.get(i).getRecipeImageURL()).into(imageView);
+        Picasso.with(mContext).load(recipes.get(i).getRecipeImageURL()).fit().centerCrop().into(imageView);
         textView.setText(recipes.get(i).getTitle());
         return view;
     }

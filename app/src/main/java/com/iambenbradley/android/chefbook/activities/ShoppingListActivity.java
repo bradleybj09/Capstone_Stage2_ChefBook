@@ -96,11 +96,10 @@ public class ShoppingListActivity extends AppCompatActivity implements LoaderMan
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSupportNavigateUp();
+                onBackPressed();
             }
         });
         recipeListView = (ListView)findViewById(R.id.list_recipe_listview);
-     //   Cursor rCursor = contentResolver.query(MyRecipesContract.TableMyRecipes.LIST_RECIPE_CONTENT_URI, null, null, null, null);
         setSupportActionBar((Toolbar)findViewById(R.id.list_toolbar));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
