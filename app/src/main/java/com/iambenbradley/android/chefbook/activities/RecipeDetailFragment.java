@@ -13,6 +13,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,6 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
 
     @Override
     public void processRandomFinish(Recipe output) {
-
         final RelativeLayout loadingView = (RelativeLayout)getView().findViewById(R.id.progress_screen);
 
         recipeID = output.getRecipeID();
@@ -78,7 +78,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
         ImageView rImageView = (ImageView)getView().findViewById(R.id.recipe_detail_image);
 
         rInstructionsTextView.setText(instructions);
-        Picasso.with(getActivity()).load(imageURL).fit().centerCrop().into(rImageView, new Callback() {
+        Picasso.with(getActivity()).load(imageURL).into(rImageView, new Callback() {
             @Override
             public void onSuccess() {
                 loadingView.setVisibility(View.GONE);
@@ -121,6 +121,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
                 + "\n" + getString(R.string.servings) + " " + String.valueOf(servings);
         rPrepServingsTextView.setText(prepAndServings);
         populateIngredients();
+
     }
 
     public void populateMyRecipe(Recipe recipe, View view) {
