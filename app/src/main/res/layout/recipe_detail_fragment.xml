@@ -51,14 +51,14 @@
                 android:id="@+id/scrim_top"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="48dp"
-                android:background="@color/medium_grey"/>
+                android:background="@color/light_grey"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:id="@+id/scrim_bottom"
                 android:layout_gravity="bottom"
-                android:background="@color/medium_grey"/>
+                android:background="@color/light_grey"/>
 
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"

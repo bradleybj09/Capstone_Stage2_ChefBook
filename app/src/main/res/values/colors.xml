@@ -3,11 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="main_yellow">#FFCC00</color>
     <color name="darker_yellow">#CCA300</color>
-    <color name="colorPrimaryDark">@color/medium_grey</color>
+    <color name="colorPrimaryDark">@color/light_grey</color>
     <color name="colorAccent">#FF4081</color>
     <color name="light_grey">#B7BCC0</color>
     <color name="medium_grey">#7E8386</color>
     <color name="dark_grey">#343436</color>
-
+    <color name="background_holo_light">#fff3f3f3</color>
+    <color name="white">@android:color/white</color>
     <color name="black_overlay">#66000000</color>
 </resources>

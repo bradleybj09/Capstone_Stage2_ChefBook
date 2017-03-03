@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/medium_grey"
+    android:background="@color/background_holo_light"
     tools:context="com.iambenbradley.android.chefbook.activities.LaunchActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -11,37 +11,52 @@
     <LinearLayout
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="center"
-        android:padding="36dp">
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/light_grey">
 
         <ImageView
             android:id="@+id/app_logo"
             android:transitionName="logo"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="132dp"
+            android:layout_marginEnd="132dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/chefbook"
+            android:src="@drawable/chefbook_logo_only"
             android:gravity="center_horizontal"
             android:keepScreenOn="true"
             android:contentDescription="@string/app_name"/>
+
+        <ImageView
+            android:id="@+id/app_title"
+            android:transitionName="title"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/chefbook_title_only"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="36dp"/>
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/get_started"
-            android:textColor="@color/main_yellow"
             android:textSize="24sp"
-            android:layout_margin="16dp"/>
-
-        <LinearLayout
-            android:background="@drawable/rounded_rectangle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
 
             <LinearLayout
                 android:clickable="true"
@@ -49,7 +64,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:elevation="4dp"
                 android:background="?android:selectableItemBackground">
 
                 <ImageView
@@ -69,15 +83,13 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/dark_grey"/>
+                    android:background="@color/light_grey"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingBottom="8dp">
+                    android:layout_gravity="center">
 
                     <TextView
                         android:id="@+id/star_text"
@@ -86,17 +98,15 @@
                         android:layout_height="wrap_content"
                         android:text="@string/my_recipes"
                         android:layout_gravity="center"
-                        android:textSize="24sp"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:textStyle="bold"/>
+                        android:textSize="18sp"
+                        android:gravity="center" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/launch_my"
                         android:layout_gravity="center"
-                        android:textSize="18sp"
+                        android:textSize="12sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
@@ -104,7 +114,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dark_grey"/>
+                android:background="@color/light_grey"/>
 
             <LinearLayout
                 android:clickable="true"
@@ -112,7 +122,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:elevation="4dp"
                 android:background="?android:selectableItemBackground">
 
                 <ImageView
@@ -132,15 +141,13 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/dark_grey"/>
+                    android:background="@color/light_grey"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingBottom="8dp">
+                    android:layout_gravity="center">
 
                     <TextView
                         android:id="@+id/search_text"
@@ -149,17 +156,15 @@
                         android:layout_height="wrap_content"
                         android:text="@string/search"
                         android:layout_gravity="center"
-                        android:textSize="24sp"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:textStyle="bold"/>
+                        android:textSize="18sp"
+                        android:gravity="center"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/launch_search"
                         android:layout_gravity="center"
-                        android:textSize="18sp"
+                        android:textSize="12sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
@@ -167,7 +172,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dark_grey"/>
+                android:background="@color/light_grey"/>
 
             <LinearLayout
                 android:clickable="true"
@@ -195,15 +200,13 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/dark_grey"/>
+                    android:background="@color/light_grey"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingBottom="8dp">
+                    android:layout_gravity="center">
 
                     <TextView
                         android:id="@+id/random_text"
@@ -212,17 +215,15 @@
                         android:layout_height="wrap_content"
                         android:text="@string/random"
                         android:layout_gravity="center"
-                        android:textSize="24sp"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:textStyle="bold"/>
+                        android:textSize="18sp"
+                        android:gravity="center"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/launch_random"
                         android:layout_gravity="center"
-                        android:textSize="18sp"
+                        android:textSize="12sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
@@ -230,7 +231,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dark_grey"/>
+                android:background="@color/light_grey"/>
 
             <LinearLayout
                 android:clickable="true"
@@ -238,7 +239,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:elevation="4dp"
                 android:background="?android:selectableItemBackground">
 
                 <ImageView
@@ -258,16 +258,13 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/dark_grey"/>
+                    android:background="@color/light_grey"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingRight="8dp"
-                    android:paddingLeft="8dp"
-                    android:paddingBottom="8dp">
-
+                    android:layout_gravity="center">
                     <TextView
                         android:id="@+id/list_text"
                         android:transitionName="list_text"
@@ -275,22 +272,19 @@
                         android:layout_height="wrap_content"
                         android:text="@string/list"
                         android:layout_gravity="center"
-                        android:textSize="24sp"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:textStyle="bold"/>
+                        android:textSize="18sp"
+                        android:gravity="center"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/launch_list"
                         android:layout_gravity="center"
-                        android:textSize="18sp"
+                        android:textSize="12sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->

@@ -347,7 +347,7 @@ public class RecipeDetailFragment extends Fragment implements FetchRecipeDetail.
             }
         });
         collapsingToolbarLayout = (CollapsingToolbarLayout)rootView.findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(mContext,R.color.medium_grey));
+        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(mContext,R.color.light_grey));
         Intent intent = getActivity().getIntent();
         Bundle arguments = getArguments();
         if (intent.hasExtra("full_recipe")){

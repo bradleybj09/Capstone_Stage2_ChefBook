@@ -20,19 +20,28 @@
             android:id="@+id/main_toolbar"
             app:contentInsetStart="0dp"
             android:fitsSystemWindows="true"
-            android:background="@color/medium_grey">
+            android:background="@color/light_grey">
 
             <ImageView
                 android:transitionName="logo"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="2dp"
                 android:scaleType="fitStart"
-                android:layout_width="wrap_content"
+                android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/chefbook"
+                android:src="@drawable/chefbook_logo_only"
                 android:gravity="center_vertical" />
+
+            <ImageView
+                android:transitionName="title"
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/chefbook_title_only" />
 
         </android.support.v7.widget.Toolbar>
 
