@@ -34,7 +34,7 @@ public class FetchRecipeDetail extends AsyncTask<String, Void, Recipe> {
 
     @Override
     protected Recipe doInBackground(String... strings) {
-        String apiKey = "yMn7M1DywmmshjLnVrGx90sD2ESIp1XfB2ijsnfU7kDaPhYGLb";
+        String apiKey = "add api key here";
         HttpURLConnection urlConnection = null;
         BufferedReader bufferedReader = null;
         String recipeJsonStr;
